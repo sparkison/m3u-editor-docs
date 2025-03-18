@@ -4,7 +4,23 @@ theme: just-the-docs
 
 remote_theme: just-the-docs/just-the-docs
 
+logo: "/assets/images/logo.png"
+favicon_ico: "/assets/images/favicon.ico"
+
 url: https://github.com/sparkison/m3u-editor
 
 aux_links:
-  Template Repository: https://github.com/sparkison/m3u-editor
+  m3u editor: https://github.com/sparkison/m3u-editor
+
+aux_links_new_tab: true
+
+color_scheme: dark
+
+permalink: pretty
+
+defaults:
+  - scope:
+      path: "docs" # an empty string here means all files in the project
+      type: "pages"
+    values:
+      layout: "default"
