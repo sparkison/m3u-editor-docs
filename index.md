@@ -6,7 +6,7 @@ nav_order: 1
 
 # m3u editor
 
-![logo](/assets/images/favicon.png)
+![logo](https://github.com/sparkison/m3u-editor-docs/blob/main/assets/images/favicon.png?raw=true)
 
 A simple `m3u` playlist editor, similar to **xteve** or **threadfin**, with `epg` management.
 
