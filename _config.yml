@@ -2,6 +2,8 @@ title: m3u editor docs
 description: Documentation for the m3u editor project
 theme: just-the-docs
 
+remote_theme: just-the-docs/just-the-docs
+
 url: https://github.com/sparkison/m3u-editor
 
 aux_links:
