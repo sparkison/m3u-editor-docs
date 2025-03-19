@@ -1,10 +1,10 @@
 ---
-title: Common Issues
+title: Troubleshooting
 layout: home
 nav_order: 3
 ---
 
-# Common Issues
+# Troubleshooting
 
 ## Tips and tricks
 
