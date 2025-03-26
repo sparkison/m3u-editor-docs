@@ -28,7 +28,7 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `PUID`  | `int` | `1000`       | user ID to run under (not currently used)       |
 | `PGID`  | `int` | `1000`       | group ID to run under (not currently used)       |
 | `APP_DEBUG`  | `true` or `false` | `false`       | output additional info to the log file       |
-| `APP_URL`    | fully qualified domain name | `https://localhost`       | url or IP address where app is being hosted |
+| `APP_URL`    | fully qualified domain name | `http://localhost`       | url or IP address where app is being hosted |
 | `APP_PORT`    | valid port number | `36400` | the port to run the app on |
 | `OCTANE_HTTPS`    | `true` or `false` | `false` | if changing `APP_URL` to use `https`, you will need to enable this as well |
 | `REDIS_HOST`    | valid hostname | `localhost`       | default uses locally installed instance
