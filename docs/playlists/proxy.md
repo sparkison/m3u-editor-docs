@@ -15,6 +15,23 @@ Edit your desired playlist, or create one.
 3. When your playlist is generated, all channel URLs for the selecte playlist will have URLs pointing to **m3u editor**, which will play and re-stream the content
   - Useful if you are restricted by client as **m3u editor** will act as the client, making it appear as if only one client/ip is accessing your playlist
 
+### 🔎 Debugging
+
+To debug, you can add the `FFMPEG_DEBUG` environment variable to have the `ffmpeg` process pipe output to `/var/www/storage/logs/ffmpeg.log` in the container. This is only recommended to troubleshoot as the log file can grow quickly.
+
+Example docker compose addition:
+
+```yaml
+services:
+  m3u-editor:
+    image: sparkison/m3u-editor:latest
+    container_name: m3u-editor
+    environment:
+      - FFMPEG_DEBUG=true
+```
+
+Or via cli: `docker run --name m3u-editor -e FFMPEG_DEBUG=true ...`
+
 
 ## 📡 Creating a playlist proxy
 

@@ -24,3 +24,5 @@ parent: EPG
     - You can use the default, or enter a custom user agent (used to fetch and sync your playlist - not used for local or uploaded files)
 - Disable SSL verification
     - Not recommended - disable to troubleshoot issues connecting to your provider for downloading/syncing of playlist
+- Preferred Locale
+    - Used for EPG mapping when no direct match is found for a channel. If multiple matching channels are found, will give priority to entered locale string, e.g. `en`
