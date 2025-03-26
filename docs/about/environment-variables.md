@@ -33,7 +33,7 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `OCTANE_HTTPS`    | `true` or `false` | `false` | if changing `APP_URL` to use `https`, you will need to enable this as well |
 | `REDIS_HOST`    | valid hostname | `localhost`       | default uses locally installed instance
 | `REDIS_SERVER_PORT`    | valid port number	 | `36790`       | default uses locally installed instance |
-| `FFMPEG_DEBUG`  | `true` or `false` | `false`       | output `ffmpeg` results to `/var/www/storage/logs/ffmpeg.log` for proxy debugging       |
+| `FFMPEG_DEBUG`  | `true` or `false` | `false`       | output `ffmpeg` results to `/var/www/storage/logs/ffmpeg.log` for [proxy]({% link docs/playlists/proxy.md %}) debugging       |
 | `REVERB_SCHEME`    | `http` or `https` | `http`       | how to access websockets |
 | `REVERB_HOST`    | valid hostname | `localhost`       | where the websocket server is running (may need to change to host IP) |
 | `REVERB_PORT`    | valid port number | `36800`       | port used to access websocket server |
