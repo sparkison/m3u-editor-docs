@@ -25,7 +25,8 @@ services:
       - TZ=Etc/UTC
       # This is used for websockets and in-app notifications
       # Set to your machine/container IP where m3u editor will be accessed, if not localhost
-      - REVERB_HOST=https://your-custom-domain.com
+      - REVERB_HOST=your-custom-domain.com
+      - REVERB_SCHEME=https
       # Uncomment and set to URL or IP if not localhost. Use full url, including http(s)
       - APP_URL=https://your-custom-domain.com
       # Uncomment and set to true if using HTTPS

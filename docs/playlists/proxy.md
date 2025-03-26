@@ -28,6 +28,7 @@ services:
     container_name: m3u-editor
     environment:
       - FFMPEG_DEBUG=true
+    ...
 ```
 
 Or via cli: `docker run --name m3u-editor -e FFMPEG_DEBUG=true ...`
@@ -56,7 +57,6 @@ services:
     ports:
       - 8888:8888
 networks: {}
-
 ```
 
 Your proxied m3u playlist can then be access via: [http://localhost:8888/proxy/hls/manifest.m3u8?d=YOUR_M3U_EDITOR_PLAYLIST_URL&api_password=YOUR_PROXY_API_PASSWORD](http://localhost:8888/proxy/hls/manifest.m3u8?d=YOUR_M3U_EDITOR_PLAYLIST_URL&api_password=YOUR_PROXY_API_PASSWORD)

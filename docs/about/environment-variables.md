@@ -1,0 +1,37 @@
+---
+title: Environment Variables
+layout: home
+nav_order: 4
+---
+
+# Environment Variables
+
+Environment variables can be used in your `docker-compose.yaml` file under the `environments` key, or via the CLI using the `-e` flag, to alter the functionality and output of the app.
+
+Docker compose example:
+```yaml
+services:
+  m3u-editor:
+    image: sparkison/m3u-editor:latest
+    container_name: m3u-editor
+    environment:
+      - VARIABLE_NAME=value
+    ...
+```
+
+or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
+
+## 🛠️ Variables
+
+| Variable Name| Accepted Values   | Default Value | Description |
+|:-------------|:------------------|:--------------|:--------------|
+| `APP_DEBUG`  | `true` or `false` | `false`       | output additional info to the log file       |
+| `APP_URL`    | fully qualified domain name | `https://localhost`       | url or IP address where app is being hosted |
+| `APP_PORT`    | valid port number | `36400` | the port to run the app on |
+| `OCTANE_HTTPS`    | `true` or `false` | `false` | if changing `APP_URL` to use `https`, you will need to enable this as well |
+| `REDIS_HOST`    | redis host to use | `localhost`       | default uses locally installed instance
+| `REDIS_SERVER_PORT`    | port used to connect to Redis store | `36790`       | default uses locally installed instance |
+| `FFMPEG_DEBUG`  | `true` or `false` | `false`       | output `ffmpeg` results to `/var/www/storage/logs/ffmpeg.log` for proxy debugging       |
+| `REVERB_SCHEME`    | `http` or `https` | `http`       | how to access websockets |
+| `REVERB_HOST`    | valid hostname | `localhost`       | where the websocket server is running (may need to change to host IP) |
+| `REVERB_PORT`    | valid port number | `36800`       | port used to access websocket server |
