@@ -25,12 +25,14 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 
 | Variable Name| Accepted Values   | Default Value | Description |
 |:-------------|:------------------|:--------------|:--------------|
+| `PUID`  | `int` | `1000`       | user ID to run under (not currently used)       |
+| `PGID`  | `int` | `1000`       | group ID to run under (not currently used)       |
 | `APP_DEBUG`  | `true` or `false` | `false`       | output additional info to the log file       |
 | `APP_URL`    | fully qualified domain name | `https://localhost`       | url or IP address where app is being hosted |
 | `APP_PORT`    | valid port number | `36400` | the port to run the app on |
 | `OCTANE_HTTPS`    | `true` or `false` | `false` | if changing `APP_URL` to use `https`, you will need to enable this as well |
-| `REDIS_HOST`    | redis host to use | `localhost`       | default uses locally installed instance
-| `REDIS_SERVER_PORT`    | port used to connect to Redis store | `36790`       | default uses locally installed instance |
+| `REDIS_HOST`    | valid hostname | `localhost`       | default uses locally installed instance
+| `REDIS_SERVER_PORT`    | valid port number	 | `36790`       | default uses locally installed instance |
 | `FFMPEG_DEBUG`  | `true` or `false` | `false`       | output `ffmpeg` results to `/var/www/storage/logs/ffmpeg.log` for proxy debugging       |
 | `REVERB_SCHEME`    | `http` or `https` | `http`       | how to access websockets |
 | `REVERB_HOST`    | valid hostname | `localhost`       | where the websocket server is running (may need to change to host IP) |
