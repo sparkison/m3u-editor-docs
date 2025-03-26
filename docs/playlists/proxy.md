@@ -15,7 +15,7 @@ Edit your desired playlist, or create one.
 3. When your playlist is generated, all channel URLs for the selecte playlist will have URLs pointing to **m3u editor**, which will play and re-stream the content
   - Useful if you are restricted by client as **m3u editor** will act as the client, making it appear as if only one client/ip is accessing your playlist
 
-### 🔎 Debugging
+### Debugging 🐛
 
 To debug, you can add the `FFMPEG_DEBUG` environment variable to have the `ffmpeg` process pipe output to `/var/www/storage/logs/ffmpeg.log` in the container. This is only recommended to troubleshoot as the log file can grow quickly.
 
