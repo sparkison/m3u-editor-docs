@@ -18,6 +18,7 @@ Edit your desired playlist, or create one.
 ### Enable/Disable dynamically
 
 You can also utilize the proxy "on the fly" via URL variables.
+
 Adding the `?proxy=` to the end of your playlist with `true` or `false`, which will enable or disable the proxy functionality dynamically.
 
 To override the Playlist proxy settings, append `?proxy=true`, or `?proxy=false`, to your playlist url, e.g.: _http://localhost:36400/9e6a2337-e48b-404e-bec4-787473b5a4b8/playlist.m3u**?proxy=false**_
