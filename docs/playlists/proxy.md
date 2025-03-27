@@ -24,7 +24,7 @@ To override the Playlist proxy settings, append `?proxy=true`, or `?proxy=false`
 
 ### Debugging 🐛
 
-To debug, you can add the `FFMPEG_DEBUG` environment variable to have the `ffmpeg` process pipe output to `/var/www/storage/logs/ffmpeg.log` in the container. This is only recommended to troubleshoot as the log file can grow quickly.
+To debug, you can add the `FFMPEG_DEBUG` environment variable to have the `ffmpeg` process pipe output to `/var/www/html/storage/logs/ffmpeg.log` in the container. This is only recommended to troubleshoot as the log file can grow quickly.
 
 Example docker compose addition:
 
