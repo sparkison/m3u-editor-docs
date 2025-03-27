@@ -15,6 +15,13 @@ Edit your desired playlist, or create one.
 3. When your playlist is generated, all channel URLs for the selecte playlist will have URLs pointing to **m3u editor**, which will play and re-stream the content
   - Useful if you are restricted by client as **m3u editor** will act as the client, making it appear as if only one client/ip is accessing your playlist
 
+### Enable/Disable dynamically
+
+You can also utilize the proxy "on the fly" via URL variables.
+Adding the `?proxy=` to the end of your playlist with `true` or `false`, which will enable or disable the proxy functionality dynamically.
+
+To override the Playlist proxy settings, append `?proxy=true`, or `?proxy=false`, to your playlist url, e.g.: _http://localhost:36400/9e6a2337-e48b-404e-bec4-787473b5a4b8/playlist.m3u**?proxy=false**_
+
 ### Debugging 🐛
 
 To debug, you can add the `FFMPEG_DEBUG` environment variable to have the `ffmpeg` process pipe output to `/var/www/storage/logs/ffmpeg.log` in the container. This is only recommended to troubleshoot as the log file can grow quickly.
@@ -34,7 +41,7 @@ services:
 Or via cli: `docker run --name m3u-editor -e FFMPEG_DEBUG=true ...`
 
 
-## 📡 Creating a playlist proxy
+## 📡 Using MediaFlow Proxy
 
 While **m3u editor** has a built in proxy option, using MediaFlow Proxy has a few advanatges, such as:
 
