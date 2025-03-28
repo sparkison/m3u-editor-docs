@@ -10,7 +10,7 @@ nav_order: 5
 
 ## Enable API front end view (Swagger docs)
 
-Head to **Preferences** -> **API** -> **Allow access to API docs**
+Head to **Preferences** ➡️ **API** ➡️ **Allow access to API docs**
 
 You will see a button on the right (**API Docs**) that will take you to the API docs page where you can view and interact with the API directly.
 

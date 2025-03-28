@@ -10,9 +10,9 @@ parent: Playlist
 
 Edit your desired playlist, or create one.
 
-1. Playlists > Create/Edit > Step 5
-2. Toggle the "Enable Proxy" option, save changes
-3. When your playlist is generated, all channel URLs for the selecte playlist will have URLs pointing to **m3u editor**, which will play and re-stream the content
+1. Playlists ➡️ Create/Edit ➡️ Step 5
+2. Toggle the **Enable Proxy** option, save changes
+3. When your playlist is generated, all channel URLs for the selected playlist will have URLs pointing to **m3u editor**, which will play and re-stream the content
   - Useful if you are restricted by client as **m3u editor** will act as the client, making it appear as if only one client/ip is accessing your playlist
 
 ### Enable/Disable dynamically
