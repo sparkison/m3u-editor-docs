@@ -6,7 +6,7 @@ nav_order: 4
 
 # Environment Variables
 
-Environment variables can be used in your `docker-compose.yaml` file under the `environments` key, or via the CLI using the `-e` flag, to alter the functionality and output of the app.
+Environment variables can be used in your `docker-compose.yaml` file under the `environment` key, or via the CLI using the `-e` flag, to alter the functionality and output of the app.
 
 Docker compose example:
 ```yaml
@@ -25,8 +25,8 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 
 | Variable Name| Accepted Values   | Default Value | Description |
 |:-------------|:------------------|:--------------|:--------------|
-| `PUID`  | `int` | `1000`       | user ID to run under (not currently used)       |
-| `PGID`  | `int` | `1000`       | group ID to run under (not currently used)       |
+| `PUID`  | `int` | `1000`       | user ID to run under (not currently implemented)       |
+| `PGID`  | `int` | `1000`       | group ID to run under (not currently implemented)       |
 | `APP_DEBUG`  | `true` or `false` | `false`       | output additional info to the log file       |
 | `APP_URL`    | fully qualified domain name | `http://localhost`       | url or IP address where app is being hosted, **including http** |
 | `APP_PORT`    | valid port number | `36400` | the port to run the app on |
