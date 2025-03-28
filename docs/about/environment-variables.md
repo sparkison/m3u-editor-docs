@@ -38,3 +38,6 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `REVERB_HOST`    | valid hostname | `localhost`       | where the websocket server is running (may need to change to host IP) |
 | `REVERB_PORT`    | valid port number | `36800`       | port used to access websocket server |
 | `PROXY_URL_OVERRIDE`    | fully qualified domain name | `null`       | url or IP address where app is being hosted, **including http**. If null or not set, will use `APP_URL` |
+| `LOG_VIEWER_API_STATEFUL_DOMAINS`    | fully qualified domain names (comma seperated list) | `null`       | if using a tld (e.g.: https://mysite.com) to run the app, will need to add here as well to access **/logs** view |
+
+
