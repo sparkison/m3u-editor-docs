@@ -6,11 +6,18 @@ nav_order: 1
 
 # m3u editor
 
-![logo](https://github.com/sparkison/m3u-editor-docs/blob/main/assets/images/favicon.png?raw=true)
-
 A simple `m3u` playlist editor, similar to **xteve** or **threadfin**, with `epg` management.
 
-Works with m3u, m3u8, m3u+ and Xtream codes api!
+![dashboard](https://github.com/sparkison/m3u-editor-docs/blob/main/assets/images/m3u-editor-dashboard.jpg?raw=true)
+
+### ✨ Just a few features m3u editor has to offer
+
+- ✅ Stream Collection & Management — Import, organize, and serve IPTV streams with zero hassle.
+- ✅ EPG Integration — Manage Electronic Program Guides like a pro.
+- ✅ M3U Import & Restreaming via internal Proxy (optional) — Make playlists work your way.
+- ✅ Clean, Responsive UI — Modern, intuitive, and built to get out of your way.
+- ✅ Self-hosted freedom — Total control in your hands.
+- ✅ HDHR support — Easily connect to your favorite clients, like Plex, Emby, JellyFin and more.
 
 ## Prerequisites
 
