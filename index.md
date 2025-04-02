@@ -10,7 +10,7 @@ A simple `m3u` playlist editor, similar to **xteve** or **threadfin**, with `epg
 
 ![dashboard](https://github.com/sparkison/m3u-editor-docs/blob/main/assets/images/m3u-editor-dashboard.jpg?raw=true)
 
-### ✨ Just a few features m3u editor has to offer
+## ✨ Just a few features m3u editor has to offer
 
 - ✅ Stream Collection & Management — Import, organize, and serve IPTV streams with zero hassle.
 - ✅ EPG Integration — Manage Electronic Program Guides like a pro.
