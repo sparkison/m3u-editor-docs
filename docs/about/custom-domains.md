@@ -32,9 +32,9 @@ services:
     container_name: m3u-editor
     environment:
       - TZ=Etc/UTC
+      - APP_URL=https://your-custom-tld.com
       # This is used for websockets and in-app notifications
       # Set to your machine/container IP where m3u editor will be accessed, if not localhost
-      - APP_URL=https://your-custom-tld.com
       - REVERB_HOST=your-custom-tld.com
       - REVERB_SCHEME=https
     volumes:
