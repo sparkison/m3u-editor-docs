@@ -37,7 +37,6 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `REDIS_SERVER_PORT`    | valid port number	 | `36790`       | default uses container instance |
 | `FFMPEG_DEBUG`  | `true` or `false` | `false`       | output `ffmpeg` results to `/var/www/storage/logs/ffmpeg.log` for [proxy]({% link docs/playlists/proxy.md %}) debugging       |
 | `PROXY_URL_OVERRIDE`    | fully qualified domain name | `null`       | url or IP address where app is being hosted, **including http**. If null or not set, will use `APP_URL` |
-| `LOG_VIEWER_API_STATEFUL_DOMAINS`    | fully qualified domain names (comma seperated list) | `null`       | if using a tld (e.g.: https://mysite.com) to run the app, will need to add here as well to access **/logs** view |
 | `MAX_CHANNELS`    | `int` | `50000`       | the maximum number of channels to import for m3u playlists (does not apply to Xtream API playlists) |
 
 
