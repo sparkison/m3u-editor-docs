@@ -10,41 +10,7 @@ nav_order: 3
 
 ### 🔒 Use the app over HTTPS or via reverse proxy/NGINX
 
-Update your `docker-compose.yaml`, or update your docker CLI command, to include additional environment variables `APP_URL` and `OCTANE_HTTPS` to define the app url and enable/disable https support.
-
-Example
-
-```yaml
-services:
-  m3u-editor:
-    image: sparkison/m3u-editor:latest
-    container_name: m3u-editor
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-      # This is used for websockets and in-app notifications
-      # Set to your machine/container IP where m3u editor will be accessed, if not localhost
-      - REVERB_HOST=your-custom-domain.com
-      - REVERB_SCHEME=https
-      # Uncomment and set to URL or IP if not localhost. Use full url, including http(s)
-      - APP_URL=https://your-custom-domain.com
-      # Uncomment and set to true if using HTTPS
-      - OCTANE_HTTPS=true
-    volumes:
-      # This will allow you to reuse the data across container recreates.
-      # Format is: <host_directory_path>:<container_path>
-      # More information: https://docs.docker.com/reference/compose-file/volumes/
-      - ./data:/var/www/config
-    restart: unless-stopped
-    ports:
-      - 36400:36400 # app
-      - 36800:36800 # websockets/broadcasting
-networks: {}
-```
-
-Restart the container to see the changes reflected.
-
+See the [Custom Domains]({% link docs/about/custom-domains.md %}) page for more information.
 
 ### 🌄 Using local images for playlist or EPG icons
 
@@ -60,12 +26,22 @@ Restart the container to see the changes reflected.
 
 ## Known issues
 
-### 💻 Apple Silicon (M-series) and other non-x86_64 platforms will need to add the `platform` (`platform: linux/x86_64`) parameter to the compose file to support x86_64 architecture - for example:
+### 💻 Apple Silicon (M-series) may need to add the `platform` (`platform: linux/x86_64`) parameter to the compose file to support x86_64 architecture - for example:
 
 ```yaml
 services:
   m3u-editor:
-    platform: linux/x86_64
+    platform: linux/x86_64 # <--- add this line
     image: sparkison/m3u-editor:latest
     ...
 ```
+
+## Notes
+
+### 🛠️ Default Docker builds
+{: .d-inline-block }
+
+New v0.4.5
+{: .d-inline-block .v-align-middle .label .label-purple }
+
+We inlcude both linux/amd64 and linux/arm64 builds in our build process, starting at version v0.4.5

@@ -7,6 +7,10 @@ parent: Playlist
 # Proxy Playlists
 
 ## 🔄 Using built in proxy
+{: .d-inline-block }
+
+Only recommended in **m3u editor v0.5.0+**
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
 
 Edit your desired playlist, or create one.
 

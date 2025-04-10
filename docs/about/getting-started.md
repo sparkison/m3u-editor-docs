@@ -16,16 +16,12 @@ services:
     image: sparkison/m3u-editor:latest
     container_name: m3u-editor
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=Etc/UTC
       # This is used for websockets and in-app notifications
       # Set to your machine/container IP where m3u editor will be accessed, if not localhost
-      - REVERB_HOST=localhost
-      # Uncomment and set to URL or IP if not localhost. Use full url, including http(s)
-      #- APP_URL=http://localhost
-      # Uncomment and set to true if using HTTPS
-      #- OCTANE_HTTPS=false
+      - APP_URL=http://localhost # or http://192.168.0.123 or https://your-custom-tld.com
+      - REVERB_HOST=localhost # or 192.168.0.123 or your-custom-tld.com
+      - REVERB_SCHEME=http # or https if using custom TLD with https
     volumes:
       # This will allow you to reuse the data across container recreates
       # Format is: <host_directory_path>:<container_path>
@@ -48,5 +44,7 @@ Access via: [http://localhost:36400](http://localhost:36400) (user = admin, pass
 
 To ensure the data is saved across builds, link an empty volume to: `/var/www/config` within the container. This is where the `env` file will be stored, along with the sqlite database and the application log files.
 
-### Note about websocket
-You will need to set the `REVERB_HOST` variable to the machine IP where **m3u editor** is runing for websockets to work correctly, if not running on `localhost`. 
+Note about websocket
+{: .label .label-purple }
+
+> You will need to set the `REVERB_HOST` variable to the machine IP where **m3u editor** is runing for websockets to work correctly, if not running on `localhost`. 
