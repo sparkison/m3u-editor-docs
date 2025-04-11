@@ -23,7 +23,7 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 
 ## 🛠️ Variables
 
-| Variable Name| Accepted Values   | Default Value | Description |
+| Variable Name| Accepted Values/Types   | Default Value | Description |
 |:-------------|:------------------|:--------------|:--------------|
 | `PUID`  | `int` | `1000`       | user ID to run under (not currently implemented)       |
 | `PGID`  | `int` | `1000`       | group ID to run under (not currently implemented)       |
