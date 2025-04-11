@@ -35,8 +35,8 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `REVERB_PORT`    | valid port number | `36800`       | port used to access websocket server |
 | `REDIS_HOST`    | valid hostname | `localhost`       | default uses container instance
 | `REDIS_SERVER_PORT`    | valid port number	 | `36790`       | default uses container instance |
-| `FFMPEG_DEBUG`  | `true` or `false` | `false`       | output `ffmpeg` results to `/var/www/storage/logs/ffmpeg.log` for [proxy]({% link docs/playlists/proxy.md %}) debugging       |
 | `PROXY_URL_OVERRIDE`    | fully qualified domain name | `null`       | url or IP address where app is being hosted, **including http**. If null or not set, will use `APP_URL` |
 | `MAX_CHANNELS`    | `int` | `50000`       | the maximum number of channels to import for m3u playlists (does not apply to Xtream API playlists) |
-
-
+| `FFMPEG_DEBUG`  | `true` or `false` | `false`       | output `ffmpeg` results to `/var/www/storage/logs/ffmpeg.log` for [proxy]({% link docs/playlists/proxy.md %}) debugging       |
+| `FFMPEG_USER_AGENT`    | `string` | `VLC/3.0.21 LibVLC/3.0.21`       | user agent string for the proxy service |
+| `FFMPEG_MAX_RETRIES`    | `int` | `3`       | the maximum number of stream retries before stopping |
