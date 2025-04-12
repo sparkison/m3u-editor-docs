@@ -40,3 +40,5 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `FFMPEG_DEBUG`  | `true` or `false` | `false`       | output `ffmpeg` results to `/var/www/storage/logs/ffmpeg.log` for [proxy]({% link docs/playlists/proxy.md %}) debugging       |
 | `FFMPEG_USER_AGENT`    | `string` | `VLC/3.0.21 LibVLC/3.0.21`       | user agent string for the proxy service |
 | `FFMPEG_MAX_RETRIES`    | `int` | `3`       | the maximum number of stream retries before stopping |
+| `BROADCAST_CONNECTION`    | `reverb`, `null` | `reverb`       | set to `null` to disable websockets. Set to `reverb` (default) to enable |
+
