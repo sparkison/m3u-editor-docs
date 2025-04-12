@@ -161,9 +161,9 @@ services:
       - 36800:36800
 ```
 
-Make sure your Trafik container has the resolverm, `myresolver`, set, or change the name to match your setup.
+Make sure your Trafik container has the resolver, `myresolver`, defined, or change the name to match your setup.
 
-E.g., the `myresolver` referenced in the setup above would look something like this:
+E.g., the `myresolver` referenced in the setup above would look something like this in your Traefik container:
 
 ```yaml
 services:
