@@ -58,7 +58,7 @@ If you're running NGINX on your host machine, the above settings will tell **m3u
 **NOTE** - It's important to ensure your `REVERB_HOST` is also set correctly, and that `REVERB_SCHEME` is set to `https`, as outlined above to prevent _websocket_ errors.
 
 Example configuration file for your **your-custom-tld.com** website:
-```
+```conf
 server {
   listen 80;
   listen [::]:80;
@@ -107,4 +107,80 @@ server {
     proxy_send_timeout 120;
   }
 }
+```
+
+### 🚦 Traefik Example
+
+If your running [Traefik](https://traefik.io/traefik/) on your server, use something like the below to get **m3u editor** running properly under a custom domain.
+
+Example `docker-compose.yaml` with Traefik labels:
+
+```yaml
+services:
+  m3u-editor:
+    image: sparkison/m3u-editor:latest
+    container_name: m3u-editor-traefik
+    environment:
+      - TZ=Etc/UTC
+      - APP_URL=https://your-custom-tld.com
+      # This is used for websockets and in-app notifications
+      # Set to your machine/container IP where m3u editor will be accessed, if not localhost
+      - REVERB_HOST=your-custom-tld.com
+      - REVERB_SCHEME=https
+    volumes:
+      - ./m3u-editor-config:/var/www/config
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+
+      # Route all other paths (/) to the app on port 36400
+      - "traefik.http.routers.m3u-main.rule=Host(`your-custom-tld.com`)"
+      - "traefik.http.routers.m3u-main.entrypoints=websecure"
+      - "traefik.http.routers.m3u-main.tls.certresolver=myresolver"
+      - "traefik.http.routers.m3u-main.service=m3u-main"
+      - "traefik.http.services.m3u-main.loadbalancer.server.port=36400"
+      - "traefik.http.services.m3u-main.loadbalancer.server.scheme=http"
+
+      # Route `/app` (websockets) to port 36800
+      - "traefik.http.routers.m3u-ws.rule=Host(`your-custom-tld.com`) && PathPrefix(`/app`)"
+      - "traefik.http.routers.m3u-ws.entrypoints=websecure"
+      - "traefik.http.routers.m3u-ws.tls.certresolver=myresolver"
+      - "traefik.http.routers.m3u-ws.service=m3u-ws"
+      - "traefik.http.routers.m3u-ws.middlewares=websocket"
+      - "traefik.http.services.m3u-ws.loadbalancer.server.port=36800"
+      - "traefik.http.services.m3u-ws.loadbalancer.server.scheme=http"
+
+      # Middleware: WebSocket support headers
+      - "traefik.http.middlewares.websocket.headers.customrequestheaders.Connection=Upgrade"
+      - "traefik.http.middlewares.websocket.headers.customrequestheaders.Upgrade=websocket"
+      - "traefik.http.middlewares.websocket.headers.customrequestheaders.Host=your-custom-tld.com"
+      - "traefik.http.middlewares.websocket.headers.customrequestheaders.X-Forwarded-Host=your-custom-tld.com"
+      - "traefik.http.middlewares.websocket.headers.customrequestheaders.X-Forwarded-Proto=https"
+    ports:
+      - 36400:36400
+      - 36800:36800
+```
+
+Make sure your Trafik container has the resolverm, `myresolver`, set, or change the name to match your setup.
+
+E.g., the `myresolver` referenced in the setup above would look something like this:
+
+```yaml
+services:
+  traefik:
+    image: traefik:v3
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - 443:443
+      - 80:80
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entryPoints.web.address=:80
+      - --entryPoints.websecure.address=:443
+      - --certificatesresolvers.myresolver.acme.email=${LETSENCRYPT_EMAIL}
+      - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.myresolver.acme.httpchallenge=true
+      - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
 ```
