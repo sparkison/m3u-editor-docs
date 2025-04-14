@@ -6,7 +6,7 @@ nav_order: 4
 
 # Custom Domains
 
-## 🔒 Use the app over HTTPS or via reverse proxy/NGINX
+## 🔒 Use the app with a custom domain, with, or without HTTPS support
 {: .d-inline-block }
 
 New (v0.5.0)
@@ -15,8 +15,19 @@ New (v0.5.0)
 Only supported in **m3u editor v0.5.0+**
 {: .d-inline-block .v-align-text-bottom .label .label-purple }
 
-Custom domains are are not officially supported on versions under v0.5.0.
+**NOTE**: Custom domains are are not officially supported on versions under v0.5.0.
 For lower versions it's recommended to use machine IP address, as outlined on the [Getting Started]({% link docs/about/getting-started.md %}) page.
+
+#### Table of contents
+
+- [Docker compose updates](#-docker-compose-updates)
+- [NGINX example](#-example-nginx-configuration)
+- [Traefik example](#-traefik-example)
+- [Caddy example](#-caddy-example)
+
+---
+
+### 🐳 Docker compose updates
 
 Update your `docker-compose.yaml` environment variables, specifically:
  - `APP_URL`
@@ -51,7 +62,9 @@ networks: {}
 
 Restart the container to see the changes reflected.
 
-### ⚡️ Example NGINX configuration
+--- 
+
+### 🏁 Example NGINX configuration
 
 If you're running NGINX on your host machine, the above settings will tell **m3u editor** to run in secure mode under the provided domain. Now it's up to your host machine to handle the SSL.
 
@@ -108,6 +121,8 @@ server {
   }
 }
 ```
+
+---
 
 ### 🚦 Traefik Example
 
@@ -183,4 +198,21 @@ services:
       - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.myresolver.acme.httpchallenge=true
       - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
+```
+
+---
+
+### 🔒 Caddy Example
+
+Caddyfile example:
+
+```
+m3u-editor {
+  reverse_proxy /app* m3u-editor:36800 {
+    transport http {
+      versions h1
+    }
+  }
+  reverse_proxy /* m3u-editor:36400
+}
 ```
