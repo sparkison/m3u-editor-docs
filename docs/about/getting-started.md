@@ -90,6 +90,7 @@ services:
 
   m3ue-mysql:
     image: mysql:8.0
+    container_name: m3ue-mysql
     environment:
       - MYSQL_ROOT_PASSWORD="y@J@U3d0!0n9" # <--- update to a custom password, or use ENV
       - MYSQL_DATABASE=m3ue
