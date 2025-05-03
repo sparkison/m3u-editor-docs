@@ -49,6 +49,8 @@ Note about websocket
 
 > You will need to set the `REVERB_HOST` variable to the machine IP where **m3u editor** is runing for websockets to work correctly, if not running on `localhost`. 
 
+---
+
 ## 🐳 Docker compose with 🐬 MySQL
 
 By default **m3u editor** uses **SQLite** as the database driver. If you'd like something more resilient, you can use **MySQL** instead. m3u editor supports this out of the box!
