@@ -51,9 +51,13 @@ Note about websocket
 
 ---
 
-## 🐳 Docker compose with 🐬 MySQL
+## 🐬 Docker compose with 💪 MySQL
+{: .d-inline-block }
 
-By default **m3u editor** uses **SQLite** as the database driver. If you'd like something more resilient, you can use **MySQL** instead. m3u editor supports this out of the box!
+New (v0.6.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+By default **m3u editor** uses **SQLite** as the database driver. If you'd like something more resilient, you can use **MySQL** instead. **m3u editor** supports this out of the box!
 
 Update your `docker-compose.yaml` file like this to use **MySQL**:
 
@@ -69,41 +73,34 @@ services:
       # Set to your machine/container IP where m3u editor will be accessed, if not localhost
       - REVERB_HOST=localhost # or 192.168.0.123 or your-custom-tld.com
       - REVERB_SCHEME=http # or https if using custom TLD with https
-      - DB_CONNECTION=mysql
-      - DB_HOST=m3ue-mysql
-      - DB_PORT=3306
-      - DB_DATABASE=m3ue
-      - DB_USERNAME=m3ue
-      - DB_PASSWORD="y@J@U3d0!0n9" # <--- update to a custom password, or use ENV
+      - ENABLE_MYSQL=true                 # <----- start here
+      - MYSQL_DATABASE=${MYSQL_DATABASE}  # <----- DB name
+      - MYSQL_USER=${MYSQL_USER}          # <----- DB user
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}  # <----- DB password
+      - DB_CONNECTION=mysql               # <----- set to `mysql` (default is `sqlite`)
+      - DB_HOST=localhost                 # <----- make sure set to `localhost`
+      - DB_PORT=3306                      # <----- using default MySQL port
+      - DB_DATABASE=${MYSQL_DATABASE}     # <----- should match `MYSQL_DATABASE`
+      - DB_USERNAME=${MYSQL_USER}         # <----- should match `MYSQL_USER`
+      - DB_PASSWORD=${MYSQL_PASSWORD}     # <----- should match `MYSQL_PASSWORD`
     volumes:
       # This will allow you to reuse the data across container recreates
       # Format is: <host_directory_path>:<container_path>
       # More information: https://docs.docker.com/reference/compose-file/volumes/
       - ./data:/var/www/config
+      - ./data/mysql:/var/lib/mysql # <----- link `mysql` directory to retain data
     restart: unless-stopped
     ports:
       - 36400:36400 # app
       - 36800:36800 # websockets/broadcasting
-    depends_on:
-      m3ue-mysql:
-        condition: service_healthy
-
-  m3ue-mysql:
-    image: mysql:8.0
-    container_name: m3ue-mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD="y@J@U3d0!0n9" # <--- update to a custom password, or use ENV
-      - MYSQL_DATABASE=m3ue
-      - MYSQL_USER=m3ue
-      - MYSQL_PASSWORD="y@J@U3d0!0n9" # <--- update to a custom password, or use ENV
-    volumes:
-      - ./data/mysql:/var/lib/mysql
-    restart: always
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
+      # - 36306:3306  # <----- (optionally) expose the MySQL instance
 networks: {}
+```
+
+then make sure to add `.env` variables in the root of project (where your `docker-compose.yaml` lives):
+
+```
+MYSQL_DATABASE=m3ue
+MYSQL_USER=m3ue
+MYSQL_PASSWORD=secret
 ```
