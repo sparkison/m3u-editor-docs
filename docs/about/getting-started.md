@@ -51,15 +51,15 @@ Note about websocket
 
 ---
 
-## 🐬 Docker compose with 💪 MySQL
+## 🐬 Docker compose with 💪 SQL (MariaDB)
 {: .d-inline-block }
 
 New (v0.6.0)
 {: .d-inline-block .v-align-text-bottom .label .label-purple }
 
-By default **m3u editor** uses **SQLite** as the database driver. If you'd like something more resilient, you can use **MySQL** instead. **m3u editor** supports this out of the box!
+By default **m3u editor** uses **SQLite** as the database driver. If you'd like something more resilient, you can switch to the **MySQL** driver instead and utilize the internal **MariaDB** instance for your database storage. **m3u editor** supports this out of the box!
 
-Update your `docker-compose.yaml` file like this to use **MySQL**:
+Update your `docker-compose.yaml` file like this to use **MySQL/MariaDB**:
 
 ```yaml
 services:
