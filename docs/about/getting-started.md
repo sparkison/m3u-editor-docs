@@ -51,15 +51,15 @@ Note about websocket
 
 ---
 
-## 🐬 Docker compose with 💪 SQL (MariaDB)
+## 🐳 Docker compose with 🐘 SQL (PostgreSQL)
 {: .d-inline-block }
 
 New (v0.6.0)
 {: .d-inline-block .v-align-text-bottom .label .label-purple }
 
-By default **m3u editor** uses **SQLite** as the database driver. If you'd like something more resilient, you can switch to the **MySQL** driver instead and utilize the internal **MariaDB** instance for your database storage. **m3u editor** supports this out of the box!
+By default **m3u editor** uses **SQLite** as the database driver. If you'd like something more resilient, you can switch to the **pgsql** driver instead and utilize the internal **PostgreSQL** instance for your database storage. **m3u editor** supports this out of the box!
 
-Update your `docker-compose.yaml` file like this to use **MySQL/MariaDB**:
+Update your `docker-compose.yaml` file like this to use **SQL/PostgreSQL**:
 
 ```yaml
 services:
@@ -73,34 +73,37 @@ services:
       # Set to your machine/container IP where m3u editor will be accessed, if not localhost
       - REVERB_HOST=localhost # or 192.168.0.123 or your-custom-tld.com
       - REVERB_SCHEME=http # or https if using custom TLD with https
-      - ENABLE_MYSQL=true                 # <----- start here
-      - MYSQL_DATABASE=${MYSQL_DATABASE}  # <----- DB name
-      - MYSQL_USER=${MYSQL_USER}          # <----- DB user
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}  # <----- DB password
-      - DB_CONNECTION=mysql               # <----- set to `mysql` (default is `sqlite`)
-      - DB_HOST=localhost                 # <----- make sure set to `localhost`
-      - DB_PORT=3306                      # <----- using default MySQL port
-      - DB_DATABASE=${MYSQL_DATABASE}     # <----- should match `MYSQL_DATABASE`
-      - DB_USERNAME=${MYSQL_USER}         # <----- should match `MYSQL_USER`
-      - DB_PASSWORD=${MYSQL_PASSWORD}     # <----- should match `MYSQL_PASSWORD`
+      - ENABLE_POSTGRES=true        # <----- start here
+      - PG_DATABASE=${PG_DATABASE}  # <----- DB name
+      - PG_USER=${PG_USER}          # <----- DB user
+      - PG_PASSWORD=${PG_PASSWORD}  # <----- DB password
+      - PG_PORT=${PG_PORT:-5432}    # <----- DB port (optional, defaults to 5432)
+      - DB_CONNECTION=pgsql         # <----- set to `pgsql` (default is `sqlite`)
+      - DB_HOST=localhost           # <----- make sure set to `localhost`
+      - DB_PORT=${PG_PORT:-5432}    # <----- using default Postgres port
+      - DB_DATABASE=${PG_DATABASE}  # <----- should match `PG_DATABASE`
+      - DB_USERNAME=${PG_USER}      # <----- should match `PG_USER`
+      - DB_PASSWORD=${PG_PASSWORD}  # <----- should match `PG_PASSWORD`
     volumes:
       # This will allow you to reuse the data across container recreates
       # Format is: <host_directory_path>:<container_path>
       # More information: https://docs.docker.com/reference/compose-file/volumes/
       - ./data:/var/www/config
-      - ./data/mysql:/var/lib/mysql # <----- link `mysql` directory to retain data
+      - pgdata:/var/lib/postgresql/data # <----- link volume `pgsql` data to retain data
     restart: unless-stopped
     ports:
       - 36400:36400 # app
       - 36800:36800 # websockets/broadcasting
-      # - 36306:3306  # <----- (optionally) expose the MySQL instance
+      # - 5432:5432 # <----- (optionally) expose the pgqsl instance
 networks: {}
+volumes:
+  pgdata:           # <----- created named volume for Postgres store
 ```
 
 then make sure to add `.env` variables in the root of project (where your `docker-compose.yaml` lives):
 
 ```
-MYSQL_DATABASE=m3ue
-MYSQL_USER=m3ue
-MYSQL_PASSWORD=secret
+PG_DATABASE=m3ue
+PG_USER=m3ue
+PG_PASSWORD=secret
 ```
