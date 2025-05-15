@@ -57,7 +57,9 @@ Note about websocket
 New (v0.6.0)
 {: .d-inline-block .v-align-text-bottom .label .label-purple }
 
-By default **m3u editor** uses **SQLite** as the database driver. If you'd like something more resilient, you can switch to the **pgsql** driver instead and utilize the internal **PostgreSQL** instance for your database storage. **m3u editor** supports this out of the box!
+By default **m3u editor** uses **SQLite** as the database driver. 
+
+If you'd like something more resilient, you can switch to the **pgsql** driver instead and utilize the internal **PostgreSQL** instance for your database storage. **m3u editor** supports this out of the box!
 
 Update your `docker-compose.yaml` file like this to use **SQL/PostgreSQL**:
 
@@ -106,4 +108,43 @@ then make sure to add `.env` variables in the root of project (where your `docke
 PG_DATABASE=m3ue
 PG_USER=m3ue
 PG_PASSWORD=secret
+```
+
+### 🔧 If you'd like to use your own PostgreSQL instance
+{: .d-inline-block }
+
+New (v0.6.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+Just update the `DB_` variables and exclude the `PG_` variables.
+
+```yaml
+services:
+  m3u-editor:
+    image: sparkison/m3u-editor:latest
+    container_name: m3u-editor
+    environment:
+      - TZ=Etc/UTC
+      - APP_URL=http://localhost # or http://192.168.0.123 or https://your-custom-tld.com
+      # This is used for websockets and in-app notifications
+      # Set to your machine/container IP where m3u editor will be accessed, if not localhost
+      - REVERB_HOST=localhost # or 192.168.0.123 or your-custom-tld.com
+      - REVERB_SCHEME=http # or https if using custom TLD with https
+      # - ENABLE_POSTGRES=false     # <----- disable, or exclude variable, either works
+      - DB_CONNECTION=pgsql         # <----- set to `pgsql` (default is `sqlite`)
+      - DB_HOST=hostname            # <----- your Postgres instance hostname (localhost, 127.0.0.1, etc.)
+      - DB_PORT=5432                # <----- your Postgres instance port
+      - DB_DATABASE=database        # <----- your Postgres database name
+      - DB_USERNAME=user            # <----- user for your Postgres database
+      - DB_PASSWORD=password        # <----- password for your Postgres database
+    volumes:
+      # This will allow you to reuse the data across container recreates
+      # Format is: <host_directory_path>:<container_path>
+      # More information: https://docs.docker.com/reference/compose-file/volumes/
+      - ./data:/var/www/config
+    restart: unless-stopped
+    ports:
+      - 36400:36400 # app
+      - 36800:36800 # websockets/broadcasting
+networks: {}
 ```
