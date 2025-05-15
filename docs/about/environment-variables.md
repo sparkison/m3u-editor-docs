@@ -39,3 +39,14 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `PROXY_URL_OVERRIDE`    | fully qualified domain name | `null`       | url or IP address where app is being hosted, **including http**. If null or not set, will use `APP_URL` |
 | `MAX_CHANNELS`    | `int` | `50000`       | the maximum number of channels to import for m3u playlists (does not apply to Xtream API playlists) |
 | `BROADCAST_CONNECTION`    | `reverb` or `null` | `reverb`       | set to `null` to disable websockets server. Set to `reverb` (default) to enable |
+| `ENABLE_POSTGRES`    | `true` or `false` | `false`       | set to `true` to enable the internal PostgreSQL instance |
+| `PG_DATABASE`    | string | `m3ue`       | enter a valid database name, e.g. "m3ue" |
+| `PG_USER`    | string | `root`       | user to create/update for `PG_DATABASE` |
+| `PG_PASSWORD`    | string | `root`       | password to set/udpate for `PG_USER` |
+| `PG_PORT`    | `int` | `5432`       | any valid port, does not need to be exposed |
+| `DB_CONNECTION`    | `sqlite` or `pgsql` | `sqlite`       | set to `pgsql` to use PostgreSQL  |
+| `DB_HOST`    | valid hostname | `null`       | valid hostname for PostgreSQL. If `ENABLE_POSTGRES` is `true` you can use `localhost` |
+| `DB_PORT`    | `int` | `null`       | valid port number for PostgreSQL. If `ENABLE_POSTGRES` is `true` you can use `PG_PORT`   |
+| `DB_DATABASE`    | string | `null`       | valid database name for PostgreSQL. If `ENABLE_POSTGRES` is `true` you can use `PG_DATABASE`   |
+| `DB_USERNAME`    | string | `null`       | valid database user for PostgreSQL. If `ENABLE_POSTGRES` is `true` you can use `PG_USER`   |
+| `DB_PASSWORD`    | string | `null`       | valid password for PostgreSQL. If `ENABLE_POSTGRES` is `true` you can use `PG_PASSWORD`   |
