@@ -37,5 +37,5 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `REDIS_SERVER_PORT`    | valid port number	 | `36790`       | default uses container instance |
 | `PROXY_URL_OVERRIDE`    | fully qualified domain name | `null`       | url or IP address where app is being hosted, **including http**. If null or not set, will use `APP_URL` |
 | `MAX_CHANNELS`    | `int` | `50000`       | the maximum number of channels to import for m3u playlists (does not apply to Xtream API playlists) |
-| `BROADCAST_CONNECTION`    | `reverb` or `null` | `reverb`       | set to `null` to disable websockets. Set to `reverb` (default) to enable |
-
+| `BROADCAST_CONNECTION`    | `reverb` or `null` | `reverb`       | set to `null` to disable websockets server. Set to `reverb` (default) to enable |
+| `REVERB_VERIFY`    | `true` or `false` | `true`       | set to `false` to disable websocket client. Set to `true` (default) to enable |
