@@ -37,6 +37,9 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `REDIS_HOST`    | valid hostname | `localhost`       | default uses container instance
 | `REDIS_SERVER_PORT`    | valid port number	 | `36790`       | default uses container instance |
 | `PROXY_URL_OVERRIDE`    | fully qualified domain name | `null`       | url or IP address where app is being hosted, **including http**. If null or not set, will use `APP_URL` |
+| `PROXY_FFMPEG_CODEC_VIDEO`    | valid video codec | `null`       | valid ffmpeg video codec, e.g. "h265" |
+| `PROXY_FFMPEG_CODEC_AUDIO`    | valid audio codec | `null`       | valid ffmpeg audio codec, e.g. "aac" |
+| `PROXY_FFMPEG_CODEC_SUBTITLES`    | valid subtitle codec | `null`       | valid ffmpeg subtitle codec, e.g. "srt" |
 | `MAX_CHANNELS`    | `int` | `50000`       | the maximum number of channels to import for m3u playlists (does not apply to Xtream API playlists) |
 | `BROADCAST_CONNECTION`    | `reverb` or `null` | `reverb`       | set to `null` to disable websockets server. Set to `reverb` (default) to enable |
 | `ENABLE_POSTGRES`    | `true` or `false` | `false`       | set to `true` to enable the internal PostgreSQL instance |
