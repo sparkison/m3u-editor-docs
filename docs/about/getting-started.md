@@ -83,17 +83,17 @@ services:
       # Set to your machine/container IP where m3u editor will be accessed, if not localhost
       - REVERB_HOST=localhost # or 192.168.0.123 or your-custom-tld.com
       - REVERB_SCHEME=http # or https if using custom TLD with https
-      - ENABLE_POSTGRES=true        # <----- start here
-      - PG_DATABASE=${PG_DATABASE}  # <----- DB name
-      - PG_USER=${PG_USER}          # <----- DB user
-      - PG_PASSWORD=${PG_PASSWORD}  # <----- DB password
-      - PG_PORT=${PG_PORT:-5432}    # <----- DB port (optional, defaults to 5432)
-      - DB_CONNECTION=pgsql         # <----- set to `pgsql` (default is `sqlite`)
-      - DB_HOST=localhost           # <----- make sure set to `localhost`
-      - DB_PORT=${PG_PORT:-5432}    # <----- using default Postgres port
-      - DB_DATABASE=${PG_DATABASE}  # <----- should match `PG_DATABASE`
-      - DB_USERNAME=${PG_USER}      # <----- should match `PG_USER`
-      - DB_PASSWORD=${PG_PASSWORD}  # <----- should match `PG_PASSWORD`
+      - ENABLE_POSTGRES=true               # <----- start here
+      - PG_DATABASE=${PG_DATABASE:-m3ue}   # <----- DB name
+      - PG_USER=${PG_USER:-m3ue}           # <----- DB user
+      - PG_PASSWORD=${PG_PASSWORD:-secret} # <----- DB password
+      - PG_PORT=${PG_PORT:-5432}           # <----- DB port (optional, defaults to 5432)
+      - DB_CONNECTION=pgsql                # <----- set to `pgsql` (default is `sqlite`)
+      - DB_HOST=localhost                  # <----- make sure set to `localhost`
+      - DB_PORT=${PG_PORT:-5432}           # <----- using default Postgres port
+      - DB_DATABASE=${PG_DATABASE:-m3ue}   # <----- should match `PG_DATABASE`
+      - DB_USERNAME=${PG_USER:-m3ue}       # <----- should match `PG_USER`
+      - DB_PASSWORD=${PG_PASSWORD:-secret} # <----- should match `PG_PASSWORD`
     volumes:
       # This will allow you to reuse the data across container recreates
       # Format is: <host_directory_path>:<container_path>
@@ -110,12 +110,13 @@ volumes:
   pgdata:           # <----- created named volume for Postgres store
 ```
 
-then make sure to add `.env` variables in the root of project (where your `docker-compose.yaml` lives):
+then make sure to add `.env` variables in the root of project (where your `docker-compose.yaml` lives) if you want to override the default values, e.g.:
 
 ```
-PG_DATABASE=m3ue
-PG_USER=m3ue
-PG_PASSWORD=secret
+PG_DATABASE=database_name
+PG_USER=database_user
+PG_PASSWORD=a_password
+PG_PORT=65432
 ```
 
 ---
