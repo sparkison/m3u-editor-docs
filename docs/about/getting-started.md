@@ -6,6 +6,23 @@ nav_order: 2
 
 # Getting started
 
+**Access via**: [http://localhost:36400](http://localhost:36400) (user = admin, password = admin)
+
+To ensure the data is saved across builds, link an empty volume to: `/var/www/config` within the container. This is where the `env` file will be stored, along with the sqlite database and the application log files.
+
+Note about websocket
+{: .label .label-purple }
+
+**NOTE**: You will need to set the `REVERB_HOST` variable to the machine IP where **m3u editor** is runing for websockets to work correctly (if not running on `localhost`). 
+
+#### Table of contents
+
+- [Docker compose (simplest)](#-docker-compose)
+- [Docker with internal Postgres (recommended)](#-docker-compose-with--sql-postgresql) <sup>(v0.6.0+)</sup>
+- [Docker with your Postgres (advanced)](#-if-youd-like-to-use-your-own-postgresql-instance) <sup>(v0.6.0+)</sup>
+
+---
+
 ## 🐳 Docker compose
 
 Use the following compose example to get up and running.
@@ -39,15 +56,6 @@ Or via Docker CLI:
 ```bash
  docker run --name m3u-editor -e TZ=Etc/UTC -e APP_URL=http://localhost -e REVERB_HOST=localhost -e REVERB_SCHEME=http -v ./data:/var/www/config --restart unless-stopped -p 36400:36400 -p 36800:36800 sparkison/m3u-editor:latest 
 ```
-
-Access via: [http://localhost:36400](http://localhost:36400) (user = admin, password = admin)
-
-To ensure the data is saved across builds, link an empty volume to: `/var/www/config` within the container. This is where the `env` file will be stored, along with the sqlite database and the application log files.
-
-Note about websocket
-{: .label .label-purple }
-
-> You will need to set the `REVERB_HOST` variable to the machine IP where **m3u editor** is runing for websockets to work correctly, if not running on `localhost`. 
 
 ---
 
@@ -110,7 +118,9 @@ PG_USER=m3ue
 PG_PASSWORD=secret
 ```
 
-### 🔧 If you'd like to use your own PostgreSQL instance
+---
+
+## 🔧 If you'd like to use your own PostgreSQL instance
 {: .d-inline-block }
 
 New (v0.6.0)
