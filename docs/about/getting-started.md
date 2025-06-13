@@ -143,7 +143,7 @@ services:
       - REVERB_SCHEME=http # or https if using custom TLD with https
       # - ENABLE_POSTGRES=false     # <----- disable, or exclude variable, either works
       - DB_CONNECTION=pgsql         # <----- set to `pgsql` (default is `sqlite`)
-      - DB_HOST=hostname            # <----- your Postgres instance hostname (localhost, 127.0.0.1, etc.)
+      - DB_HOST=hostname            # <----- your Postgres instance hostname (localhost, 192.168.0.456, etc.)
       - DB_PORT=5432                # <----- your Postgres instance port
       - DB_DATABASE=database        # <----- your Postgres database name
       - DB_USERNAME=user            # <----- user for your Postgres database
