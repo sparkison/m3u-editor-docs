@@ -49,7 +49,7 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `ENABLE_POSTGRES`    | `true` or `false` | `false`       | set to `true` to enable the internal PostgreSQL instance |
 | `PG_DATABASE`    | string | `m3ue`       | enter a valid database name, e.g. "m3ue" |
 | `PG_USER`    | string | `root`       | user to create/update for `PG_DATABASE` |
-| `PG_PASSWORD`    | string | `root`       | password to set/udpate for `PG_USER` |
+| `PG_PASSWORD`    | string | `root`       | password to set/update for `PG_USER` |
 | `PG_PORT`    | `int` | `5432`       | any valid port, does not need to be exposed |
 | `DB_CONNECTION`    | `sqlite` or `pgsql` | `sqlite`       | set to `pgsql` to use PostgreSQL  |
 | `DB_HOST`    | valid hostname | `null`       | valid hostname for PostgreSQL. If `ENABLE_POSTGRES` is `true` you can use `localhost` |
