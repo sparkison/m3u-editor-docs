@@ -43,6 +43,7 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `PROXY_FFMPEG_CODEC_AUDIO`    | valid audio codec | `null`       | valid ffmpeg audio codec, e.g. "aac" |
 | `PROXY_FFMPEG_CODEC_SUBTITLES`    | valid subtitle codec | `null`       | valid ffmpeg subtitle codec, e.g. "srt" |
 | `MAX_CHANNELS`    | `int` | `50000`       | the maximum number of channels to import for m3u playlists (does not apply to Xtream API playlists) |
+| `DISABLE_SYNC_LOGS`    | `bool` | `false`       | disable the creation of sync logs for playlists. Can be useful with larger lists using SQLite database |
 | `INVALIDATE_IMPORT`    | `bool` | `false`       | whether to invalidate Playlist sync if conditon met (see `INVALIDATE_IMPORT_THRESHOLD`) |
 | `INVALIDATE_IMPORT_THRESHOLD`    | `int` | `100`       | if the current sync will have less channels than the current channel count (less this value), the sync will be invalidated and canceled (when `INVALIDATE_IMPORT` is `true`) |
 | `BROADCAST_CONNECTION`    | `reverb` or `null` | `reverb`       | set to `null` to disable websockets server. Set to `reverb` (default) to enable |
