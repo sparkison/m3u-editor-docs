@@ -15,6 +15,17 @@ Note about websocket
 
 **NOTE**: You will need to set the `REVERB_HOST` variable to the machine IP where **m3u editor** is runing for websockets to work correctly (if not running on `localhost`). 
 
+#### Versions
+
+We inlcude both **linux/amd64** and **linux/arm64** builds in our build process, starting at version `v0.4.5`. We also push regular updates and new beta features to the `experimental` and `dev` branches.
+
+- 💪 Use the latest stable release: `sparkison/m3u-editor:latest`
+- #️⃣ Use a specific version: `sparkison/m3u-editor:0.6.4`, `sparkison/m3u-editor:0.6.8`, etc.
+- 🔥 Use the dev branch: `sparkison/m3u-editor:dev`
+  - stable'ish branch – we try to keep this one clean and fix bugs as quickly as possible
+- 🧪 Use the experimental branch: `sparkison/m3u-editor:experimental`
+  - new and fun features that can break things; features will be announced on our Discord under the **#releases** channel
+
 #### Table of contents
 
 - [Docker compose (simplest)](#-docker-compose)
