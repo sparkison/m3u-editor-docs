@@ -215,3 +215,10 @@ If using WSL2 or Docker Desktop
 {: .label .label-purple }
 
 You can emulate a RamDisk with a tool like ImDisk or mount to /tmp inside WSL. Point the Docker volume to that path.
+
+Optional setup
+{: .label .label-orange }
+
+- Using a RamDisk is optional. If you don’t configure one, HLS will still work (segments just go to disk).
+- For smaller deployments or casual use, the default disk-based setup is perfectly fine.
+- For heavy HLS workloads or long-running live streams, using a RamDisk is strongly recommended.
