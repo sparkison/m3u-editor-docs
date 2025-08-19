@@ -55,6 +55,8 @@ services:
       # Format is: <host_directory_path>:<container_path>
       # More information: https://docs.docker.com/reference/compose-file/volumes/
       - ./data:/var/www/config
+      # Optionally, for optimal performance using HLS proxy, link a Ram Disk to the HLS file location used for transoding
+      # - /mnt/RamDisk:/var/www/html/storage/app/hls
     restart: unless-stopped
     ports:
       - 36400:36400 # app
@@ -110,6 +112,8 @@ services:
       # Format is: <host_directory_path>:<container_path>
       # More information: https://docs.docker.com/reference/compose-file/volumes/
       - ./data:/var/www/config
+      # Optionally, for optimal performance using HLS proxy, link a Ram Disk to the HLS file location used for transoding
+      # - /mnt/RamDisk:/var/www/html/storage/app/hls
       - pgdata:/var/lib/postgresql/data # <----- link volume `pgsql` data to retain data
     restart: unless-stopped
     ports:
@@ -164,9 +168,50 @@ services:
       # Format is: <host_directory_path>:<container_path>
       # More information: https://docs.docker.com/reference/compose-file/volumes/
       - ./data:/var/www/config
+      # Optionally, for optimal performance using HLS proxy, link a Ram Disk to the HLS file location used for transoding
+      # - /mnt/RamDisk:/var/www/html/storage/app/hls
     restart: unless-stopped
     ports:
       - 36400:36400 # app
       - 36800:36800 # websockets/broadcasting
 networks: {}
 ```
+
+---
+
+## 📕 Notes
+
+### Proxy storage behavior
+
+- **TS proxy streaming** uses **Redis (in-memory only)** to buffer transport stream data. This means no disk writes are involved for TS playback, keeping things fast and ephemeral.  
+- **HLS proxy streaming** writes `.ts` segment files to **disk** (default path: `/var/www/html/storage/app/hls` inside the container). This ensures segments are available for clients during the HLS playlist cycle.
+
+---
+
+### Performance tip: Use a RamDisk for HLS
+
+By default, HLS segment files are written to your container’s local disk. While this works fine, it can:  
+- Increase disk wear (lots of small writes).  
+- Cause slower performance on slower storage (e.g., HDD, network drives).  
+
+For optimal performance, you can mount a **RamDisk** to the HLS storage path. This keeps all HLS segments in memory while still making them available to the application.
+
+Example for Linux
+{: .label .label-purple }
+
+1. Create a RamDisk mount point on your host (adjust **size=512M** as needed for your stream workload):
+```bash
+   sudo mkdir -p /mnt/RamDisk
+   sudo mount -t tmpfs -o size=512M tmpfs /mnt/RamDisk
+```
+2. Update your docker-compose.yaml:
+```yaml
+volumes:
+  - /mnt/RamDisk:/var/www/html/storage/app/hls
+```
+3. Restart your container
+
+If using WSL2 or Docker Desktop
+{: .label .label-purple }
+
+You can emulate a RamDisk with a tool like ImDisk or mount to /tmp inside WSL. Point the Docker volume to that path.
