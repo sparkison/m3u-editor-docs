@@ -188,7 +188,7 @@ networks: {}
 
 ---
 
-### Performance tip: Use a RamDisk for HLS
+### ⚡️ Performance tip ⚡️ Use a RamDisk for HLS
 
 By default, HLS segment files are written to your container’s local disk. While this works fine, it can:  
 - Increase disk wear (lots of small writes).  
