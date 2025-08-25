@@ -187,14 +187,14 @@ networks: {}
 
 as an example, you can add this to your **m3u-editor** docker compose to utilize it:
 ```yaml
-  ...
+services:
+  m3u-editor:
       healthcheck:
         test: ["CMD", "curl", "-f", "http://localhost:36400/up"] # Make sure to update the port if you've changed it, url can remain localhost as it's an internally run command
         interval: 10s
         timeout: 5s
         retries: 5
         start_period: 20s
-  ...
 ```
 
 A more complete example would look something like this:
