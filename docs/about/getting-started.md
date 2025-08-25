@@ -181,6 +181,71 @@ networks: {}
 
 ## 📕 Notes
 
+### 🩺 Health check options
+
+**m3u editor** has a built-in health check you can use when needed.
+
+as an example, you can add this to your **m3u-editor** docker compose to utilize it:
+```yaml
+  ...
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:36400/up"] # Make sure to update the port if you've changed it, url can remain localhost as it's an internally run command
+        interval: 10s
+        timeout: 5s
+        retries: 5
+        start_period: 20s
+  ...
+```
+
+A more complete example would look something like this:
+
+```yaml
+services:
+  m3u-editor:
+    image: sparkison/m3u-editor:latest
+    container_name: m3u-editor
+    environment:
+      - TZ=Etc/UTC
+      - APP_URL=http://localhost
+      - REVERB_HOST=localhost
+      - REVERB_SCHEME=http
+      - DB_CONNECTION=pgsql
+      - DB_HOST=hostname
+      - DB_PORT=5432
+      - DB_DATABASE=database
+      - DB_USERNAME=user
+      - DB_PASSWORD=password
+    volumes:
+      - ./data:/var/www/config
+      # - /mnt/RamDisk:/var/www/html/storage/app/hls
+    restart: unless-stopped
+    ports:
+      - 36400:36400 # app (Nginx/Laravel)
+      - 36800:36800 # websockets/broadcasting
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:36400/up"] # Make sure to update the port if you've changed it, url can remain localhost as it's an internally run command
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    depends_on:
+      m3u-editor:
+        condition: service_healthy
+    ports:
+      - 8096:8096
+    volumes:
+      - ./jellyfin/config:/config
+      - ./jellyfin/cache:/cache
+      - ./jellyfin/media:/media
+    restart: unless-stopped
+
+networks: {}
+```
+
 ### Proxy storage behavior
 
 - **TS proxy streaming** uses **Redis (in-memory only)** to buffer transport stream data. This means no disk writes are involved for TS playback, keeping things fast and ephemeral.  
