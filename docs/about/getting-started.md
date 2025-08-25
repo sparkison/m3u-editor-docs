@@ -31,7 +31,7 @@ We inlcude both **linux/amd64** and **linux/arm64** builds in our build process,
 - [Docker compose (simplest)](#-docker-compose)
 - [Docker with internal Postgres (recommended)](#-docker-compose-with--sql-postgresql) <sup>(v0.6.0+)</sup>
 - [Docker with your Postgres (advanced)](#-if-youd-like-to-use-your-own-postgresql-instance) <sup>(v0.6.0+)</sup>
-- [Notes](#-notes)
+- 📕 [Tips & Notes](#-notes)
 ---
 
 ## 🐳 Docker compose
@@ -179,7 +179,7 @@ networks: {}
 
 ---
 
-## 📕 Notes
+## 📕 Tips & Notes
 
 ### 🩺 Health check options
 
@@ -253,6 +253,7 @@ networks: {}
 volumes:
   pgdata:
 ```
+---
 
 ### Proxy storage behavior
 
