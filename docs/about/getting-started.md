@@ -192,9 +192,9 @@ services:
       healthcheck:
         test: ["CMD", "curl", "-f", "http://localhost:36400/up"] # Make sure to update the port if you've changed it, url can remain localhost as it's an internally run command
         interval: 10s
-        timeout: 5s
-        retries: 5
-        start_period: 20s
+        timeout: 10s
+        retries: 10
+        start_period: 60s
 ```
 
 A more complete example would look something like this:
@@ -231,9 +231,9 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:36400/up"] # Make sure to update the port if you've changed it, url can remain localhost as it's an internally run command
       interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
 
   jellyfin:
     image: jellyfin/jellyfin:latest
