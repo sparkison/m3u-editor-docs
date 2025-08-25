@@ -206,22 +206,28 @@ services:
     container_name: m3u-editor
     environment:
       - TZ=Etc/UTC
-      - APP_URL=http://localhost
-      - REVERB_HOST=localhost
+      - APP_URL=http://192.168.0.123
+      - REVERB_HOST=192.168.0.123
       - REVERB_SCHEME=http
+      - ENABLE_POSTGRES=true
       - DB_CONNECTION=pgsql
-      - DB_HOST=hostname
+      - DB_HOST=localhost
+      - PG_PORT=5432
       - DB_PORT=5432
-      - DB_DATABASE=database
-      - DB_USERNAME=user
-      - DB_PASSWORD=password
+      - PG_DATABASE=m3ue
+      - DB_DATABASE=m3ue
+      - PG_USER=m3ue
+      - DB_USERNAME=m3ue
+      - PG_PASSWORD=secret
+      - DB_PASSWORD=secret
     volumes:
       - ./data:/var/www/config
       # - /mnt/RamDisk:/var/www/html/storage/app/hls
+      - pgdata:/var/lib/postgresql/data
     restart: unless-stopped
     ports:
-      - 36400:36400 # app (Nginx/Laravel)
-      - 36800:36800 # websockets/broadcasting
+      - 36400:36400
+      - 36800:36800
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:36400/up"] # Make sure to update the port if you've changed it, url can remain localhost as it's an internally run command
       interval: 10s
@@ -244,6 +250,8 @@ services:
     restart: unless-stopped
 
 networks: {}
+volumes:
+  pgdata:
 ```
 
 ### Proxy storage behavior
