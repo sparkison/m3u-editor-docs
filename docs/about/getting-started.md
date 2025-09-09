@@ -55,8 +55,9 @@ services:
       # Format is: <host_directory_path>:<container_path>
       # More information: https://docs.docker.com/reference/compose-file/volumes/
       - ./data:/var/www/config
-      # Optionally, for optimal performance using HLS proxy, link a Ram Disk to the HLS file location used for transoding
-      # - /mnt/RamDisk:/var/www/html/storage/app/hls
+    # Optionally, for optimal performance using HLS proxy, link a `tmpfs` mount to the HLS file directory 
+    #tmpfs:
+    #  - /var/www/html/storage/app/hls:size=512m
     restart: unless-stopped
     ports:
       - 36400:36400 # app
@@ -112,9 +113,10 @@ services:
       # Format is: <host_directory_path>:<container_path>
       # More information: https://docs.docker.com/reference/compose-file/volumes/
       - ./data:/var/www/config
-      # Optionally, for optimal performance using HLS proxy, link a Ram Disk to the HLS file location used for transoding
-      # - /mnt/RamDisk:/var/www/html/storage/app/hls
       - pgdata:/var/lib/postgresql/data # <----- link volume `pgsql` data to retain data
+    # Optionally, for optimal performance using HLS proxy, link a `tmpfs` mount to the HLS file directory 
+    #tmpfs:
+    #  - /var/www/html/storage/app/hls:size=512m
     restart: unless-stopped
     ports:
       - 36400:36400 # app
@@ -168,8 +170,9 @@ services:
       # Format is: <host_directory_path>:<container_path>
       # More information: https://docs.docker.com/reference/compose-file/volumes/
       - ./data:/var/www/config
-      # Optionally, for optimal performance using HLS proxy, link a Ram Disk to the HLS file location used for transoding
-      # - /mnt/RamDisk:/var/www/html/storage/app/hls
+    # Optionally, for optimal performance using HLS proxy, link a `tmpfs` mount to the HLS file directory 
+    #tmpfs:
+    #  - /var/www/html/storage/app/hls:size=512m
     restart: unless-stopped
     ports:
       - 36400:36400 # app
@@ -222,8 +225,10 @@ services:
       - DB_PASSWORD=secret
     volumes:
       - ./data:/var/www/config
-      # - /mnt/RamDisk:/var/www/html/storage/app/hls
       - pgdata:/var/lib/postgresql/data
+    # Optionally, for optimal performance using HLS proxy, link a `tmpfs` mount to the HLS file directory 
+    #tmpfs:
+    #  - /var/www/html/storage/app/hls:size=512m
     restart: unless-stopped
     ports:
       - 36400:36400
@@ -262,13 +267,24 @@ volumes:
 
 ---
 
-### ⚡️ Performance tip ⚡️ Use a RamDisk for HLS
+### ⚡️ Performance tip ⚡️ Use a tmpfs or RamDisk for HLS
 
 By default, HLS segment files are written to your container’s local disk. While this works fine, it can:  
 - Increase disk wear (lots of small writes).  
 - Cause slower performance on slower storage (e.g., HDD, network drives).  
 
-For optimal performance, you can mount a **RamDisk** to the HLS storage path. This keeps all HLS segments in memory while still making them available to the application.
+For optimal performance, you can mount a **RamDisk** to the HLS storage path, or use a **tmpfs** mount. This keeps all HLS segments in memory while still making them available to the application.
+
+#### tmpfs example
+
+Simply add the following to your docker composer:
+
+```yaml
+    tmpfs:
+      - /var/www/html/storage/app/hls:size=512m
+```
+
+#### RamDisk example
 
 Example for Linux
 {: .label .label-purple }
