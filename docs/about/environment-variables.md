@@ -29,6 +29,8 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `PGID`  | `int` | `1000`       | group ID to run under (not currently implemented)       |
 | `APP_DEBUG`  | `true` or `false` | `false`       | output additional info to the log file       |
 | `AUTO_LOGIN`  | `true` or `false` | `false`       | enable auto-login functionality       |
+| `LOGIN_PATH`  | string | `login`       | the path used to login to the app       |
+| `REDIRECT_GUEST_TO_LOGIN`  | `true` or `false` | `true`       | redirect the base domain to the login page if not logged in       |
 | `APP_URL`    | fully qualified domain name | `http://localhost`       | url or IP address where app is being hosted, **including http** |
 | `APP_PORT`    | valid port number | `36400` | the port to run the app on |
 | `REVERB_SCHEME`    | `http` or `https` | `http`       | how to access websockets |
