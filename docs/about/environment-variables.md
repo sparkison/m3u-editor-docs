@@ -49,6 +49,7 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `DISABLE_SYNC_LOGS`    | `bool` | `false`       | disable the creation of sync logs for playlists. Can be useful with larger lists using SQLite database |
 | `INVALIDATE_IMPORT`    | `bool` | `false`       | whether to invalidate Playlist sync if conditon met (see `INVALIDATE_IMPORT_THRESHOLD`) |
 | `INVALIDATE_IMPORT_THRESHOLD`    | `int` | `100`       | if the current sync will have less channels than the current channel count (less this value), the sync will be invalidated and canceled (when `INVALIDATE_IMPORT` is `true`) |
+| `DISABLE_M3U_XTREAM_FORMAT`    | `true` or `false` | `false`       | by default, all urls will use the Xtream API format so additional stream analysis, check for stream limits, etc. can be performed. Disable to return the provider url (or proxyfied url) instead for M3U playlists. |
 | `BROADCAST_CONNECTION`    | `reverb` or `null` | `reverb`       | set to `null` to disable websockets server. Set to `reverb` (default) to enable |
 | `ENABLE_POSTGRES`    | `true` or `false` | `false`       | set to `true` to enable the internal PostgreSQL instance |
 | `PG_DATABASE`    | string | `m3ue`       | enter a valid database name, e.g. "m3ue" |
