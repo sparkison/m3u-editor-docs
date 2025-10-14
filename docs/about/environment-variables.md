@@ -58,7 +58,7 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `DB_PASSWORD`    | string | `null`       | valid password for PostgreSQL. If `ENABLE_POSTGRES` is `true` you can use `PG_PASSWORD`   |
 
 
-### Depricated variables 
+### Deprecated variables 
 
 The following variables are not longer used in `v0.8.x` and up.
 
