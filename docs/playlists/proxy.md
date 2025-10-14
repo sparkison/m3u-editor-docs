@@ -9,7 +9,7 @@ parent: Playlist
 ## 🔄 Using built in proxy
 {: .d-inline-block }
 
-Only recommended in **m3u editor v0.5.0+**
+Only available in **m3u editor v0.8.0+**
 {: .d-inline-block .v-align-text-bottom .label .label-purple }
 
 Edit your desired playlist, or create one.
@@ -29,7 +29,7 @@ To override the Playlist proxy settings, append `?proxy=true`, or `?proxy=false`
 
 ### Debugging 🐛
 
-To debug, you can add the `FFMPEG_DEBUG` environment variable to have the `ffmpeg` process pipe output to `/var/www/html/storage/logs/ffmpeg.log` in the container. This is only recommended to troubleshoot as the log file can grow quickly.
+To debug, you can add the `M3U_PROXY_LOG_LEVEL` environment variable to have the `m3u-proxy` process pipe output to `/var/www/html/storage/logs/m3u-proxy.log` in the container. This is only recommended to troubleshoot as the log file can grow quickly.
 
 Example docker compose addition:
 
@@ -39,11 +39,11 @@ services:
     image: sparkison/m3u-editor:latest
     container_name: m3u-editor
     environment:
-      - FFMPEG_DEBUG=true
+      - M3U_PROXY_LOG_LEVEL=info 
     ...
 ```
 
-Or via cli: `docker run --name m3u-editor -e FFMPEG_DEBUG=true ...`
+Or via cli: `docker run --name m3u-editor -e M3U_PROXY_LOG_LEVEL=info  ...`
 
 
 ## 📡 Using MediaFlow Proxy

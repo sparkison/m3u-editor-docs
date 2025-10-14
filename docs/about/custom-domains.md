@@ -31,8 +31,6 @@ For lower versions it's recommended to use machine IP address, as outlined on th
 
 Update your `docker-compose.yaml` environment variables, specifically:
  - `APP_URL`
- - `REVERB_HOST`
- - `REVERB_SCHEME`
 
 Example:
 
@@ -44,10 +42,6 @@ services:
     environment:
       - TZ=Etc/UTC
       - APP_URL=https://your-custom-tld.com
-      # This is used for websockets and in-app notifications
-      # Set to your machine/container IP where m3u editor will be accessed, if not localhost
-      - REVERB_HOST=your-custom-tld.com
-      - REVERB_SCHEME=https
     volumes:
       # This will allow you to reuse the data across container recreates.
       # Format is: <host_directory_path>:<container_path>
@@ -55,8 +49,7 @@ services:
       - ./data:/var/www/config
     restart: unless-stopped
     ports:
-      - 36400:36400 # app
-      - 36800:36800 # websockets/broadcasting
+      - 36400:36400
 networks: {}
 ```
 
@@ -105,20 +98,6 @@ server {
   location / {
     try_files $uri @reverse_proxy;
   }
-  
-  # m3u editor websockets
-  location /app {
-    proxy_pass http://127.0.0.1:36800;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "Upgrade";
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_read_timeout 120;
-    proxy_send_timeout 120;
-  }
 }
 ```
 
@@ -138,10 +117,6 @@ services:
     environment:
       - TZ=Etc/UTC
       - APP_URL=https://your-custom-tld.com
-      # This is used for websockets and in-app notifications
-      # Set to your machine/container IP where m3u editor will be accessed, if not localhost
-      - REVERB_HOST=your-custom-tld.com
-      - REVERB_SCHEME=https
     volumes:
       - ./m3u-editor-config:/var/www/config
     restart: unless-stopped
@@ -155,25 +130,8 @@ services:
       - "traefik.http.routers.m3u-main.service=m3u-main"
       - "traefik.http.services.m3u-main.loadbalancer.server.port=36400"
       - "traefik.http.services.m3u-main.loadbalancer.server.scheme=http"
-
-      # Route `/app` (websockets) to port 36800
-      - "traefik.http.routers.m3u-ws.rule=Host(`your-custom-tld.com`) && PathPrefix(`/app`)"
-      - "traefik.http.routers.m3u-ws.entrypoints=websecure"
-      - "traefik.http.routers.m3u-ws.tls.certresolver=myresolver"
-      - "traefik.http.routers.m3u-ws.service=m3u-ws"
-      - "traefik.http.routers.m3u-ws.middlewares=websocket"
-      - "traefik.http.services.m3u-ws.loadbalancer.server.port=36800"
-      - "traefik.http.services.m3u-ws.loadbalancer.server.scheme=http"
-
-      # Middleware: WebSocket support headers
-      - "traefik.http.middlewares.websocket.headers.customrequestheaders.Connection=Upgrade"
-      - "traefik.http.middlewares.websocket.headers.customrequestheaders.Upgrade=websocket"
-      - "traefik.http.middlewares.websocket.headers.customrequestheaders.Host=your-custom-tld.com"
-      - "traefik.http.middlewares.websocket.headers.customrequestheaders.X-Forwarded-Host=your-custom-tld.com"
-      - "traefik.http.middlewares.websocket.headers.customrequestheaders.X-Forwarded-Proto=https"
     ports:
       - 36400:36400
-      - 36800:36800
 ```
 
 Make sure your Trafik container has the resolver, `myresolver`, defined, or change the name to match your setup.
@@ -208,11 +166,6 @@ Caddyfile example:
 
 ```
 m3u-editor {
-  reverse_proxy /app* m3u-editor:36800 {
-    transport http {
-      versions h1
-    }
-  }
   reverse_proxy /* m3u-editor:36400
 }
 ```
