@@ -50,9 +50,6 @@ services:
       # Format is: <host_directory_path>:<container_path>
       # More information: https://docs.docker.com/reference/compose-file/volumes/
       - ./data:/var/www/config
-    # Optionally, for optimal performance using HLS proxy, link a `tmpfs` mount to the HLS file directory 
-    #tmpfs:
-    #  - /var/www/html/storage/app/hls:size=512m
     restart: unless-stopped
     ports:
       - 36400:36400
@@ -104,9 +101,6 @@ services:
       # More information: https://docs.docker.com/reference/compose-file/volumes/
       - ./data:/var/www/config
       - pgdata:/var/lib/postgresql/data # <----- link volume `pgsql` data to retain data
-    # Optionally, for optimal performance using HLS proxy, link a `tmpfs` mount to the HLS file directory 
-    #tmpfs:
-    #  - /var/www/html/storage/app/hls:size=512m
     restart: unless-stopped
     ports:
       - 36400:36400
@@ -155,9 +149,6 @@ services:
       # Format is: <host_directory_path>:<container_path>
       # More information: https://docs.docker.com/reference/compose-file/volumes/
       - ./data:/var/www/config
-    # Optionally, for optimal performance using HLS proxy, link a `tmpfs` mount to the HLS file directory 
-    #tmpfs:
-    #  - /var/www/html/storage/app/hls:size=512m
     restart: unless-stopped
     ports:
       - 36400:36400
@@ -208,9 +199,6 @@ services:
     volumes:
       - ./data:/var/www/config
       - pgdata:/var/lib/postgresql/data
-    # Optionally, for optimal performance using HLS proxy, link a `tmpfs` mount to the HLS file directory 
-    #tmpfs:
-    #  - /var/www/html/storage/app/hls:size=512m
     restart: unless-stopped
     ports:
       - 36400:36400
