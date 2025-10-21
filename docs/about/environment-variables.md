@@ -44,7 +44,6 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `INVALIDATE_IMPORT`    | `bool` | `false`       | whether to invalidate Playlist sync if conditon met (see `INVALIDATE_IMPORT_THRESHOLD`) |
 | `INVALIDATE_IMPORT_THRESHOLD`    | `int` | `100`       | if the current sync will have less channels than the current channel count (less this value), the sync will be invalidated and canceled (when `INVALIDATE_IMPORT` is `true`) |
 | `DISABLE_M3U_XTREAM_FORMAT`    | `true` or `false` | `false`       | by default, all urls will use the Xtream API format so additional stream analysis, check for stream limits, etc. can be performed. Disable to return the provider url (or proxyfied url) instead for M3U playlists. |
-| `BROADCAST_CONNECTION`    | `reverb` or `null` | `reverb`       | set to `null` to disable websockets server. Set to `reverb` (default) to enable |
 | `ENABLE_POSTGRES`    | `true` or `false` | `false`       | set to `true` to enable the internal PostgreSQL instance |
 | `PG_DATABASE`    | string | `m3ue`       | enter a valid database name, e.g. "m3ue" |
 | `PG_USER`    | string | `root`       | user to create/update for `PG_DATABASE` |
@@ -64,6 +63,7 @@ The following variables are not longer used in `v0.8.x` and up.
 
 - The `PROXY_FFMPEG_` variables are not used as there's no `ffmpeg` process being used any longer.
 - The `REVERB_` keys are now automatically set to reflect your `APP_URL` and uses reverse proxy internally so additional ports do not need exposed. Because if this the scheme and host are set automatically.
+- The `BROADCAST_CONNECTION` is always `reverb` (the built in websocket service). This now runs via local reverse proxy, so there is no need to expose additional ports (it is __not__ required to espose port `36800` any longer, the default websocket port) or adding reverse proxy, etc. Because of this, it is no longer possible to disable the websockets for in-app notifications and they are instead enabled by default.
 
 | Variable Name| Accepted Values/Types   | Default Value | Description |
 |:-------------|:------------------|:--------------|:--------------|
@@ -73,3 +73,4 @@ The following variables are not longer used in `v0.8.x` and up.
 | `PROXY_FFMPEG_CODEC_VIDEO`    | valid video codec | `null`       | valid ffmpeg video codec, e.g. "h265" |
 | `PROXY_FFMPEG_CODEC_AUDIO`    | valid audio codec | `null`       | valid ffmpeg audio codec, e.g. "aac" |
 | `PROXY_FFMPEG_CODEC_SUBTITLES`    | valid subtitle codec | `null`       | valid ffmpeg subtitle codec, e.g. "srt" |
+| `BROADCAST_CONNECTION`    | `reverb` or `null` | `reverb`       | set to `null` to disable websockets server. Set to `reverb` (default) to enable |
