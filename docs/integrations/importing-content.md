@@ -154,7 +154,7 @@ The sync system uses batch tracking to detect changes:
 
 ### Duplicate Content
 
-***Duplicate content will appear if you enable "Multi-Genre Handling" with the "All Genres - Content appears in all applicable genres" option selected.
+**Duplicate content will appear if you enable "Multi-Genre Handling" with the "All Genres - Content appears in all applicable genres" option selected.**
 
 1. Check if you've imported the same library multiple times
 2. Review your genre handling settings
