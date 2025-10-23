@@ -79,3 +79,13 @@ Choose how content is accessed:
 
 - **Server Streaming URLs**: Stream through your media server (default)
 - **Direct File Paths**: Access local files directly (requires file system access)
+
+
+## License and Credits
+
+This integration is part of the M3U Editor project. It uses the official Emby and Jellyfin APIs and is compatible with both platforms.
+
+**Emby** is a trademark of Emby LLC.
+**Jellyfin** is a trademark of the Jellyfin Project.
+
+This integration is not officially affiliated with or endorsed by Emby LLC or the Jellyfin Project.
