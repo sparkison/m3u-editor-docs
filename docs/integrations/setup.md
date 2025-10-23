@@ -1,9 +1,11 @@
 ---
 title: Setup
 layout: home
-nav_order: 2
+parent: Integrations
+nav_order: 0
 ---
-## Initial Setup
+
+# Initial Setup
 
 ### Step 1: Configure Media Server Connection
 

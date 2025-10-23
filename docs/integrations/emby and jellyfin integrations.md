@@ -1,12 +1,12 @@
 ---
-title: Emby and Jellyfun Integraions
+title: Emby and Jellyfin
 layout: home
-nav_order: 1
+parent: Integrations
 ---
 
 ## Overview
 
-The M3U Editor provides seamless integration with Emby and Jellyfin media servers, allowing you to automatically sync your media library into playlists. This integration supports both VOD (Video on Demand) content and TV series with full metadata synchronization.
+The M3U Editor provides seamless integration with **Emby** and **Jellyfin** media servers, allowing you to automatically sync your media library into playlists. This integration supports both VOD (Video on Demand) content and TV series with full metadata synchronization.
 
 ### What This Integration Does
 

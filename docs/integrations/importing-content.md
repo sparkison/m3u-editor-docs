@@ -1,7 +1,7 @@
 ---
 title: Importing Content
 layout: home
-nav_order: 3
+parent: Emby and Jellyfin
 ---
 
 # Importing VOD and Series Content
@@ -12,7 +12,7 @@ This guide covers how to import Movies (VOD) and TV Series from your Emby or Jel
 
 Before you can import content, you must:
 
-1. Complete the [initial setup]({% link docs/integrations/setup integration.md %}) to configure your Emby/Jellyfin connection
+1. Complete the [initial setup]({% link docs/integrations/setup.md %}) to configure your Emby/Jellyfin connection
 2. Create at least one playlist in M3U Editor to import content into
 3. Ensure your media libraries are properly configured in Emby/Jellyfin
 
