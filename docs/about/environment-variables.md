@@ -38,7 +38,6 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `REDIS_HOST`    | valid hostname | `localhost`       | default uses container instance
 | `REDIS_SERVER_PORT`    | valid port number	 | `36790`       | default uses container instance |
 | `PROXY_URL_OVERRIDE`    | fully qualified domain name | `null`       | url or IP address where app is being hosted, **including http**. If null or not set, will use `APP_URL` |
-| `PROXY_FFMPEG_PATH`    | `ffmpeg` or `jellyfin-ffempg`, or valid path to executable | `null`       | valid path to executable if not `ffmpeg` or `jellyfin-ffempg` for local instance |
 | `MAX_CHANNELS`    | `int` | `50000`       | the maximum number of channels to import for m3u playlists (does not apply to Xtream API playlists) |
 | `DISABLE_SYNC_LOGS`    | `bool` | `false`       | disable the creation of sync logs for playlists. Can be useful with larger lists using SQLite database |
 | `INVALIDATE_IMPORT`    | `bool` | `false`       | whether to invalidate Playlist sync if conditon met (see `INVALIDATE_IMPORT_THRESHOLD`) |
@@ -69,6 +68,7 @@ The following variables are not longer used in `v0.8.x` and up.
 |:-------------|:------------------|:--------------|:--------------|
 | `REVERB_SCHEME`    | `http` or `https` | `http`       | how to access websockets |
 | `REVERB_HOST`    | valid hostname | `localhost`       | where the websocket server is running (may need to change to host IP) |
+| `PROXY_FFMPEG_PATH`    | `ffmpeg` or `jellyfin-ffempg`, or valid path to executable | `null`       | valid path to executable if not `ffmpeg` or `jellyfin-ffempg` for local instance |
 | `PROXY_FFMPEG_ADDITIONAL_ARGS`    | valid `ffmpeg` input args | `null`       | arguments will be added _before_ the input source |
 | `PROXY_FFMPEG_CODEC_VIDEO`    | valid video codec | `null`       | valid ffmpeg video codec, e.g. "h265" |
 | `PROXY_FFMPEG_CODEC_AUDIO`    | valid audio codec | `null`       | valid ffmpeg audio codec, e.g. "aac" |
