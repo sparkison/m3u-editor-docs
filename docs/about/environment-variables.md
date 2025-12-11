@@ -55,13 +55,85 @@ or via CLI: `docker run --name m3u-editor -e VARIABLE_NAME=value ...`
 | `DB_USERNAME`    | string | `null`       | valid database user for PostgreSQL. If `ENABLE_POSTGRES` is `true` you can use `PG_USER`   |
 | `DB_PASSWORD`    | string | `null`       | valid password for PostgreSQL. If `ENABLE_POSTGRES` is `true` you can use `PG_PASSWORD`   |
 
+## 🔄 M3U Proxy Variables
+{: .d-inline-block }
+
+New (v0.8.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+These variables configure the m3u-proxy functionality for stream proxying and transcoding.
+
+| Variable Name| Accepted Values/Types   | Default Value | Description |
+|:-------------|:------------------|:--------------|:--------------|
+| `M3U_PROXY_ENABLED`    | `true` or `false` | `true`       | `true` = use embedded proxy, `false` = use external m3u-proxy container |
+| `M3U_PROXY_HOST`    | valid hostname | `localhost`       | hostname of the m3u-proxy service (use container name for external, e.g., `m3u-proxy`) |
+| `M3U_PROXY_PORT`    | valid port number | `8085`       | port the m3u-proxy service runs on (default `38085` for external) |
+| `M3U_PROXY_TOKEN`    | string | auto-generated       | API authentication token for m3u-proxy (must match `API_TOKEN` on external proxy) |
+| `M3U_PROXY_PUBLIC_URL`    | fully qualified URL | `null`       | public URL for accessing the proxy (if different from internal URL) |
+| `M3U_PROXY_LOG_LEVEL`    | `DEBUG`, `INFO`, `WARN`, `ERROR` | `null`       | enable logging for m3u-proxy (logs to `/var/www/html/storage/logs/m3u-proxy.log`) |
+
+## 📺 HLS Storage Variables
+{: .d-inline-block }
+
+New (v0.8.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+Configure HLS segment storage and garbage collection for proxied streams.
+
+| Variable Name| Accepted Values/Types   | Default Value | Description |
+|:-------------|:------------------|:--------------|:--------------|
+| `HLS_TEMP_DIR`    | valid path | `/tmp/hls`       | directory for storing HLS segments |
+| `HLS_GC_ENABLED`    | `true` or `false` | `true`       | enable garbage collection for old HLS segments |
+| `HLS_GC_INTERVAL`    | `int` (seconds) | `60`       | how often to run garbage collection |
+| `HLS_GC_AGE_THRESHOLD`    | `int` (seconds) | `300`       | delete HLS segments older than this value |
+
+## 🌐 Web Server Variables
+{: .d-inline-block }
+
+New (v0.8.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+Configure the embedded web server.
+
+| Variable Name| Accepted Values/Types   | Default Value | Description |
+|:-------------|:------------------|:--------------|:--------------|
+| `NGINX_ENABLED`    | `true` or `false` | `true`       | enable/disable embedded Nginx (set to `false` when using external web server) |
+| `FPMPORT`    | valid port number | `9000`       | PHP-FPM port for external web server integration |
+| `REDIS_ENABLED`    | `true` or `false` | `true`       | enable/disable embedded Redis (set to `false` when using external Redis) |
+
+## 📁 Xtream & STRM Variables
+{: .d-inline-block }
+
+New (v0.8.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+Configure Xtream API and STRM file generation.
+
+| Variable Name| Accepted Values/Types   | Default Value | Description |
+|:-------------|:------------------|:--------------|:--------------|
+| `XTREAM_SERIES_FOLDER`    | string | `Series`       | folder name for series content in STRM generation |
+| `XTREAM_MOVIE_FOLDER`    | string | `Movies`       | folder name for movie content in STRM generation |
+| `XTREAM_STRM_FOLDER`    | string | `strm`       | output folder for generated STRM files |
+
+## 🖼️ Logo & Cache Variables
+
+| Variable Name| Accepted Values/Types   | Default Value | Description |
+|:-------------|:------------------|:--------------|:--------------|
+| `LOGO_CACHE_EXPIRY_DAYS`    | `int` | `30`       | number of days to cache channel logos before refreshing |
+
+## 🐛 Debug Variables
+
+| Variable Name| Accepted Values/Types   | Default Value | Description |
+|:-------------|:------------------|:--------------|:--------------|
+| `SHARED_STREAMING_DEBUG`    | `true` or `false` | `false`       | enable debug logging for shared streaming/pooling |
+
 
 ### Deprecated variables 
 
 The following variables are not longer used in `v0.8.x` and up.
 
-- The `PROXY_FFMPEG_` variables are not used as there's no `ffmpeg` process being used any longer.
-- The `REVERB_` keys are now automatically set to reflect your `APP_URL` and uses reverse proxy internally so additional ports do not need exposed. Because if this the scheme and host are set automatically.
+- The `PROXY_FFMPEG_*` variables are not used as m3u-proxy now handles all transcoding. Use an external m3u-proxy instance with hardware acceleration for transcoding needs.
+- The `REVERB_*` keys are now automatically set to reflect your `APP_URL` and uses reverse proxy internally so additional ports do not need exposed. Because if this the scheme and host are set automatically.
 - The `BROADCAST_CONNECTION` is always `reverb` (the built in websocket service). This now runs via local reverse proxy, so there is no need to expose additional ports (it is __not__ required to espose port `36800` any longer, the default websocket port) or adding reverse proxy, etc. Because of this, it is no longer possible to disable the websockets for in-app notifications and they are instead enabled by default.
 
 | Variable Name| Accepted Values/Types   | Default Value | Description |
