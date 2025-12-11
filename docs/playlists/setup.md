@@ -71,3 +71,57 @@ Select your provider playlist type, options are:
     - Used to define the number of streams available, currently only used for **HDHomeRun** device, if not using HDHR feature, you can set this to any value.
 - Enable Proxy
     - Use **m3u editor** built in [proxy functionality]({% link docs/playlists/proxy.md %})
+
+### Step 6 (Advanced Options)
+{: .d-inline-block }
+
+New (v0.8.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+#### Auto-Merge Channels
+
+Auto-merge allows you to automatically combine channels with the same stream ID into a single master channel with failover support.
+
+- **Auto-merge channels after sync**
+    - When enabled, channels with identical stream IDs are automatically merged after playlist sync
+- **Deactivate failover channels**
+    - Automatically disable channels that are configured as failovers
+- **Prioritize by resolution**
+    - Use stream resolution to determine which channel becomes the master
+    - ⚠️ **Warning**: This requires analyzing each stream, which may cause rate limiting with some IPTV providers. Only enable when necessary.
+- **Force complete re-merge**
+    - Reprocess all channels instead of just new ones
+
+**How Master Channel Selection Works:**
+
+Without resolution check (Recommended for IPTV):
+1. If a "Preferred Playlist" is selected: First channel from that playlist becomes master
+2. Otherwise: First channel based on playlist priority becomes master
+
+With resolution check:
+1. Channels are analyzed to determine resolution
+2. Channel with highest resolution becomes master
+3. Remaining channels become failovers, sorted by resolution
+
+#### Connection Limits
+
+Configure maximum simultaneous connections for your playlist:
+
+- **Stream limit**
+    - Maximum number of concurrent connections allowed
+    - Useful when your provider restricts simultaneous streams
+
+---
+
+## Output URL Formats
+
+Your playlist can be accessed in multiple formats:
+
+| Format | URL Pattern | Use Case |
+|:-------|:------------|:---------|
+| M3U Playlist | `/{uuid}/playlist.m3u` | Standard M3U players |
+| EPG XML | `/{uuid}/epg.xml` | EPG-enabled players |
+| HDHomeRun | `/{uuid}/discover.json` | Plex, Jellyfin, Emby |
+| Xtream API | `/player_api.php?username=X&password=Y` | IPTV apps |
+
+All URLs can be found in **Step 1** of the playlist editor after creation.
