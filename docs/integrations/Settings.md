@@ -32,7 +32,7 @@ The media server integration contains various actionable items depicted below
 - Shows success notification that sync has started
 - User will receive notifications when sync completes/fails
 
-## Cleanup Duplicates
+### Cleanup Duplicates
 **Purpose:** Removes duplicate series entries created during sync format changes
 
 **Behavior:**
