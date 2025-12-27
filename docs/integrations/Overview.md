@@ -11,12 +11,13 @@ Enables seamless integration with media servers like Emby and Jellyfin, allowing
 >[!NOTE]
 >Plex integration is not yet available but is targeted for a future release. See the roadmap for feature that are coming soon or that are in development. 
 ---
-## Getting Started
+## RoadMap 
 
-To configure media server integrations perform the following actions:
+-[x] Initial Emby and Jellyfin integration **Experimental Branch**.
+-[ ] Emby\Jellyfin user imports.
+-[ ] Basic Plex integration.
+-[ ] Local media integration.
 
->[!IMPORTANT]
->These instructions assume you have a working Emby or Jellyfin Media server
 
 
 
