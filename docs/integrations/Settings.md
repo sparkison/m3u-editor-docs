@@ -37,5 +37,22 @@ The media server integration contains various actionable items depicted below
 
 **Behavior:**
 - Will find and merge duplicate series entries that were created due to sync format changes. Duplicate series without episodes will be removed, and their seasons will be merged into the series that has episodes.
+- Calls cleanupDuplicateSeries() method
+- Shows info notification if no duplicates found
+- Shows success notification with counts of merged/deleted items if duplicates were found
+
+### Edit
+**Purpose:** Opens the edit form for the media server integration
+
+### View Playlist
+**Purpose:** Navigates to the associated playlist's edit page
+
+**Behavior:**
+- Opens the playlist edit page in a new navigation
+
+### Delete
+**Purpose:** Removes the media server integration
+
+  
 
 
