@@ -5,7 +5,7 @@ parent: Integrations
 nav_order: 0
 ---
 
-## Setup
+# Setup
 
 To configure media server integrations perform the following actions:
 
