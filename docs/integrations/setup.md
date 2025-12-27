@@ -5,8 +5,9 @@ parent: Integrations
 nav_order: 0
 ---
 
-# Initial Setup
+## Getting Started
 
-### Step 1: ...
+To configure media server integrations perform the following actions:
 
-WIP
+>[!IMPORTANT]
+>These instructions assume you have a working Emby or Jellyfin Media server
