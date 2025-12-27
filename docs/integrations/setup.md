@@ -16,7 +16,7 @@ To configure media server integrations perform the following actions:
 >These Instructions follow the Emby procedure. Jellyfin follows a similar pattern.
 
 
-### Gather Media Server Details
+## Gather Media Server Details
 You will need to make sure you have your url for your Emby Server. This can be in the form of an IP address or FQDN (DNS). To facilitate the integration, you will also need to generate or use an existing Emby API key.
 
 >[!TIP]
