@@ -22,7 +22,7 @@ The media server integration contains various actionable items depicted below
 - Calls the MediaServerService to test connectivity
 - Shows success notification with server name and version if successful
 - Shows error notification with failure message if unsuccessful
-
+---
 ### Sync Now
 **Purpose:** Manually triggers a full sync of content from the media server
 
@@ -31,7 +31,7 @@ The media server integration contains various actionable items depicted below
 - Dispatches a SyncMediaServer job to the queue
 - Shows success notification that sync has started
 - User will receive notifications when sync completes/fails
-
+---
 ### Cleanup Duplicates
 **Purpose:** Removes duplicate series entries created during sync format changes
 
@@ -40,16 +40,16 @@ The media server integration contains various actionable items depicted below
 - Calls cleanupDuplicateSeries() method
 - Shows info notification if no duplicates found
 - Shows success notification with counts of merged/deleted items if duplicates were found
-
+---
 ### Edit
-**Purpose:** Opens the edit form for the media server integration
-
+**Purpose:** Opens the edit form for the media server integration.
+---
 ### View Playlist
 **Purpose:** Navigates to the associated playlist's edit page
 
 **Behavior:**
 - Opens the playlist edit page in a new navigation
-
+---
 ### Delete
 **Purpose:** Removes the media server integration
 
