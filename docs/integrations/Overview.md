@@ -13,10 +13,10 @@ Enables seamless integration with media servers like Emby and Jellyfin, allowing
 ---
 ## RoadMap 
 
--[x] Initial Emby and Jellyfin integration **Experimental Branch**.
--[ ] Emby\Jellyfin user imports.
--[ ] Basic Plex integration.
--[ ] Local media integration.
+- [x] Initial Emby and Jellyfin integration **Experimental Branch**.
+- [ ] Emby\Jellyfin user imports.
+- [ ] Basic Plex integration.
+- [ ] Local media integration.
 
 
 
