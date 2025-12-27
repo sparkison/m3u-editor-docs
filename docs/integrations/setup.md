@@ -13,7 +13,7 @@ To configure media server integrations perform the following actions:
 >These instructions assume you have a working Emby or Jellyfin Media server
 
 >[!NOTE]
->These Instructions following the Emby procedure. Jellyfin follows a similar pattern.
+>These Instructions follow the Emby procedure. Jellyfin follows a similar pattern.
 
 
 ### Gather Media Server Details
