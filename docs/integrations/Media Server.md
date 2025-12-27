@@ -7,10 +7,16 @@ layout: home
 
 Enables seamless integration with media servers like Emby and Jellyfin, allowing users to import, manage, and serve VOD and series content through a unified IPTV playlist system. It securely proxies streams, synchronizes media libraries, and exposes a compatible Xtream Codes API for IPTV players. The integration ensures that media server content—movies, series, seasons, and episodes—can be browsed, streamed, and managed alongside traditional IPTV sources, providing a modern, flexible, and secure IPTV experience.
 
----
-### Getting Started
 
-To co
+>[!NOTE]
+>Plex integration is not yet available but is targeted for a future release. See the roadmap for feature that are coming soon or that are in development. 
+---
+## Getting Started
+
+To configure media server integrations perform the following actions:
+
+>[!IMPORTANT]
+>These instructions assume you have a working Emby or Jellyfin Media server
 
 
 
