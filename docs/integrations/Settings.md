@@ -53,6 +53,18 @@ The media server integration contains various actionable items depicted below
 ### Delete
 **Purpose:** Removes the media server integration
 
-  
+---
+## Media Server Integration (Import Settings)
+Within a configured media server integration you can control how Groups (VOD) and Categories (Series) are processed.
+
+There are two options when it comes to genre handling:
+- Primary **Use only the first genre. Prevents duplication by placing an item in a single group/category. Recommended for**
+- All **Use all genres. Items store all genres and may appear in multiple groups/categories, which increases duplicates, storage, and sync time**
+
+  <img width="988" height="318" alt="image" src="https://github.com/user-attachments/assets/953af053-55bd-407d-8eec-e76a0a8cc8f7" />
+/>
+
+>[!TIP]
+>Use Primary unless you specifically need every item to appear in all of its genres and accept the extra duplicates and sync overhead  
 
 
