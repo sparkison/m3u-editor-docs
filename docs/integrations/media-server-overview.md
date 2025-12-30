@@ -2,7 +2,7 @@
 title: Media Server
 layout: home
 parent: Integrations
-nav_order: 0
+nav_order: 3
 ---
 
 # Media Server Integrations
