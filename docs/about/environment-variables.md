@@ -69,7 +69,6 @@ These variables configure the m3u-proxy functionality for stream proxying and tr
 | `M3U_PROXY_HOST`    | valid hostname | `localhost`       | hostname of the m3u-proxy service (use container name for external, e.g., `m3u-proxy`) |
 | `M3U_PROXY_PORT`    | valid port number | `8085`       | port the m3u-proxy service runs on (default `38085` for external) |
 | `M3U_PROXY_TOKEN`    | string | auto-generated       | API authentication token for m3u-proxy (must match `API_TOKEN` on external proxy) |
-| `M3U_PROXY_PUBLIC_URL`    | fully qualified URL | `null`       | public URL for accessing the proxy (if different from internal URL) |
 | `M3U_PROXY_LOG_LEVEL`    | `DEBUG`, `INFO`, `WARN`, `ERROR` | `null`       | enable logging for m3u-proxy (logs to `/var/www/html/storage/logs/m3u-proxy.log`) |
 
 ## 📺 HLS Storage Variables
