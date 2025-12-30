@@ -5,58 +5,203 @@ parent: Integrations
 nav_order: 0
 ---
 
-# Setup
+# Integration Setup
 
-To configure media server integrations perform the following actions:
+## Prerequisites
 
->[!IMPORTANT]
->These instructions assume you have a working Emby or Jellyfin Media server
+Before integrating with media servers:
 
->[!NOTE]
->These Instructions follow the Emby procedure. Jellyfin follows a similar pattern.
+1. Create and configure your playlist in **m3u editor**
+2. Note your playlist URLs from **Playlists** ➡️ **Edit** ➡️ **Step 1 (Links)**
+3. Ensure **m3u editor** is accessible from your media server
 
+---
 
-## Gather Media Server Details
-You will need to make sure you have your url for your Emby Server. This can be in the form of an IP address or FQDN (DNS). To facilitate the integration, you will also need to generate or use an existing Emby API key.
+## Jellyfin
+{: #jellyfin }
 
->[!TIP]
->You can use an existing API key for the integration.
+### HDHomeRun Tuner Setup
 
-**Generate API Key**
-1. Access the Management Dashboard by clicking the gear icon in the upper right 
+1. In Jellyfin, go to **Dashboard** ➡️ **Live TV**
+2. Click **Add** under "Tuner Devices"
+3. Select **HD Homerun** as the tuner type
+4. Enter your **m3u editor** HDHomeRun URL:
+   ```
+   http://YOUR_M3U_EDITOR_IP:36400/{playlist-uuid}/discover.json
+   ```
+5. Click **Save**
 
-   <img width="231" height="107" alt="image" src="https://github.com/user-attachments/assets/e1f1cdfb-5fe3-4c82-9e79-6b5b975d9ba3" />
+### EPG Setup
 
-2. In the left panel scroll down to **Adanced** and select API Keys
+1. Go to **Dashboard** ➡️ **Live TV** ➡️ **TV Guide Data Providers**
+2. Click **Add**
+3. Select **XMLTV**
+4. Enter your EPG URL:
+   ```
+   http://YOUR_M3U_EDITOR_IP:36400/{playlist-uuid}/epg.xml
+   ```
+5. Click **Save**
+6. Refresh guide data
 
-   <img width="284" height="453" alt="image" src="https://github.com/user-attachments/assets/f13a9b9a-8f87-4124-b9ad-77e49a555ef7" />
+### Docker Compose Example
 
-3. Select **New API Key** and assign in descriptive name for your records
+```yaml
+services:
+  m3u-editor:
+    image: sparkison/m3u-editor:latest
+    # ... your m3u-editor config ...
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:36400/up"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
 
-  <img width="363" height="128" alt="image" src="https://github.com/user-attachments/assets/332e2826-8a2e-41b3-bd0a-2b92d8857387" />
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    depends_on:
+      m3u-editor:
+        condition: service_healthy
+    ports:
+      - 8096:8096
+    volumes:
+      - ./jellyfin/config:/config
+      - ./jellyfin/cache:/cache
+    restart: unless-stopped
+```
 
->[!IMPORTANT]
->Save your URL and API key so you can use it for configuring the integration
+---
 
-### Configure the integration
+## Plex
+{: #plex }
 
-1. In M3U-Editor expand the sidebar (left side), locate the integrations section and select **Media Servers**
+### HDHomeRun Tuner Setup
 
-   <img width="363" height="553" alt="image" src="https://github.com/user-attachments/assets/0d74fb94-f963-43ff-835a-e9a6a7256278" />
+1. In Plex, go to **Settings** ➡️ **Live TV & DVR**
+2. Click **Set Up Plex DVR**
+3. Plex should auto-discover your HDHomeRun device, or you can manually enter:
+   ```
+   http://YOUR_M3U_EDITOR_IP:36400/{playlist-uuid}/discover.json
+   ```
+4. Follow the setup wizard to configure channels
 
+### EPG Setup
 
-2. Click **Add Media Server**
+Plex handles EPG through its own guide service or via the HDHomeRun integration. For custom EPG:
 
-3. Fill in the details that were gathered earlier and click **Create**
+1. You may need to use tools like **xteve** as an intermediary
+2. Or configure Plex to use the XMLTV guide from m3u editor
 
-   <img width="1377" height="1077" alt="image" src="https://github.com/user-attachments/assets/6450ead0-6d03-493d-ac62-05c46b39c5d7" />
+**Note**: Plex's Live TV integration works best with Plex Pass subscription.
 
->[!TIP]
->Your media server should not be displayed under the Media Servers integrations.
+---
 
-  <img width="1398" height="392" alt="image" src="https://github.com/user-attachments/assets/3fdd43c0-488f-4287-8f37-cfcfb7757edb" />
+## Emby
+{: #emby }
 
-   
-     
+### HDHomeRun Tuner Setup
 
+1. In Emby, go to **Settings** ➡️ **Live TV**
+2. Click **Add** under "TV Sources"
+3. Select **HD Homerun**
+4. Enter your m3u editor HDHomeRun URL:
+   ```
+   http://YOUR_M3U_EDITOR_IP:36400/{playlist-uuid}/discover.json
+   ```
+5. Click **Save**
 
+### EPG Setup
+
+1. Go to **Settings** ➡️ **Live TV** ➡️ **Guide Provider**
+2. Click **Add Guide Provider**
+3. Select **XMLTV**
+4. Enter your EPG URL:
+   ```
+   http://YOUR_M3U_EDITOR_IP:36400/{playlist-uuid}/epg.xml
+   ```
+5. Save and refresh guide data
+
+---
+
+## IPTV Apps (Xtream API)
+{: #iptv-apps }
+
+For apps that support Xtream API (TiviMate, IPTV Smarters, OTT Navigator, etc.):
+
+### Connection Details
+
+| Field | Value |
+|:------|:------|
+| Server URL | `http://YOUR_M3U_EDITOR_IP:36400` |
+| Username | Your playlist username |
+| Password | Your playlist password |
+
+**Note**: Username and password are configured in your playlist settings.
+
+### TiviMate Setup
+
+1. Open TiviMate
+2. Select **Add Playlist**
+3. Choose **Xtream Codes**
+4. Enter:
+   - **Server URL**: `http://YOUR_M3U_EDITOR_IP:36400`
+   - **Username**: Your playlist username
+   - **Password**: Your playlist password
+5. Click **Next** and complete setup
+
+### IPTV Smarters Setup
+
+1. Open IPTV Smarters
+2. Select **Add User** ➡️ **Login with Xtream Codes API**
+3. Enter:
+   - **Any Name**: Your playlist name
+   - **Username**: Your playlist username
+   - **Password**: Your playlist password
+   - **URL**: `http://YOUR_M3U_EDITOR_IP:36400`
+4. Click **Add User**
+
+---
+
+## Direct M3U Playlist
+
+For players that support M3U directly (VLC, Kodi, etc.):
+
+### Playlist URL
+```
+http://YOUR_M3U_EDITOR_IP:36400/{playlist-uuid}/playlist.m3u
+```
+
+### With Proxy Enabled
+```
+http://YOUR_M3U_EDITOR_IP:36400/{playlist-uuid}/playlist.m3u?proxy=true
+```
+
+### EPG URL
+```
+http://YOUR_M3U_EDITOR_IP:36400/{playlist-uuid}/epg.xml
+```
+
+---
+
+## Troubleshooting
+
+### Media server can't find HDHomeRun device
+
+1. Ensure **m3u editor** is accessible from your media server
+2. Check firewall rules allow port 36400
+3. Try using the IP address instead of hostname
+4. Verify the playlist UUID is correct
+
+### Channels not showing EPG data
+
+1. Ensure EPG is synced in **m3u editor**
+2. Check EPG mapping in your playlist channels
+3. Refresh guide data in your media server
+4. Verify channel IDs match between playlist and EPG
+
+### Streams buffering or failing
+
+1. Enable proxy in **m3u editor** to handle connection limits
+2. Check provider stream limits
+3. Consider using external m3u-proxy with stream pooling

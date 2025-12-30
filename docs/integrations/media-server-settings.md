@@ -1,7 +1,7 @@
 ---
 title: Settings
 layout: home
-parent: Integrations
+parent: Media Server
 nav_order: 1
 ---
 
