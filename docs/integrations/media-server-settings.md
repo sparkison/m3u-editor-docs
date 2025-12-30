@@ -64,8 +64,8 @@ There are two options when it comes to genre handling:
 
   <img width="988" height="318" alt="image" src="https://github.com/user-attachments/assets/953af053-55bd-407d-8eec-e76a0a8cc8f7"/>
 
->[!TIP]
->Use Primary unless you specifically need every item to appear in all of its genres and accept the extra duplicates and sync overhead
+>**💡 TIP**: Use Primary unless you specifically need every item to appear in all of its genres and accept the extra duplicates and sync overhead
+
 ---
 ## Sync Schedule
 Configures synchronization schedule with the integrated media server. The following are the support sync intervals

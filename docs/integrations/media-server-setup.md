@@ -9,18 +9,14 @@ nav_order: 0
 
 To configure media server integrations perform the following actions:
 
->[!IMPORTANT]
->These instructions assume you have a working Emby or Jellyfin Media server
+>**⚠️ IMPORTANT**: These instructions assume you have a working Emby or Jellyfin Media server
 
->[!NOTE]
->These Instructions follow the Emby procedure. Jellyfin follows a similar pattern.
-
+>**NOTE**: These Instructions follow the Emby procedure. Jellyfin follows a similar pattern.
 
 ## Gather Media Server Details
 You will need to make sure you have your url for your Emby Server. This can be in the form of an IP address or FQDN (DNS). To facilitate the integration, you will also need to generate or use an existing Emby API key.
 
->[!TIP]
->You can use an existing API key for the integration.
+>**💡 TIP**: You can use an existing API key for the integration.
 
 **Generate API Key**
 1. Access the Management Dashboard by clicking the gear icon in the upper right 
@@ -35,8 +31,7 @@ You will need to make sure you have your url for your Emby Server. This can be i
 
   <img width="363" height="128" alt="image" src="https://github.com/user-attachments/assets/332e2826-8a2e-41b3-bd0a-2b92d8857387" />
 
->[!IMPORTANT]
->Save your URL and API key so you can use it for configuring the integration
+>**⚠️ IMPORTANT** Save your URL and API key so you can use it for configuring the integration
 
 ### Configure the integration
 
@@ -51,8 +46,7 @@ You will need to make sure you have your url for your Emby Server. This can be i
 
    <img width="1377" height="1077" alt="image" src="https://github.com/user-attachments/assets/6450ead0-6d03-493d-ac62-05c46b39c5d7" />
 
->[!TIP]
->Your media server should not be displayed under the Media Servers integrations.
+>**💡 TIP**: Your media server should not be displayed under the Media Servers integrations.
 
   <img width="1398" height="392" alt="image" src="https://github.com/user-attachments/assets/3fdd43c0-488f-4287-8f37-cfcfb7757edb" />
 
