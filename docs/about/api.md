@@ -79,7 +79,7 @@ Which would return something like this:
   {
     "name": "Sports",
     "uuid": "9e6a24b9-9e5c-47ca-aedc-45c174224dd2"
-  },
+  }
 ]
 ```
 
@@ -95,3 +95,116 @@ curl --request GET \
 Which would force the **Sports** playlist from the results above to be synced immediately.
 
 Be sure to head to [http://localhost:36400/docs/api](http://localhost:36400/docs/api) for the most recent API endpoints and to view and interact with the API directly (make sure you've enabled the API docs: **Preferences** -> **API** -> **Allow access to API docs**, otherwise you will see a `403 Forbidden` error).
+
+---
+
+## 📺 EPG API Endpoints
+{: .d-inline-block }
+
+New (v0.8.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+### Get EPG Data
+
+Retrieve EPG data for a specific EPG source with pagination support.
+
+```sh
+curl --request GET \
+  --url 'http://localhost:36400/api/epg/{uuid}/data?page=1&per_page=50&start_date=2025-01-01' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer YOUR_API_TOKEN'
+```
+
+**Parameters:**
+- `uuid` - EPG UUID
+- `page` - Page number (default: 1)
+- `per_page` - Results per page (default: 50)
+- `start_date` - Filter programmes starting from this date (YYYY-MM-DD)
+
+### Get EPG Data for Playlist
+
+Retrieve EPG data for all enabled channels in a playlist.
+
+```sh
+curl --request GET \
+  --url 'http://localhost:36400/api/epg/playlist/{uuid}/data?page=1&per_page=50' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer YOUR_API_TOKEN'
+```
+
+---
+
+## 🔄 M3U Proxy API Endpoints
+{: .d-inline-block }
+
+New (v0.8.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+These endpoints are used internally by m3u-proxy for stream management.
+
+| Endpoint | Method | Description |
+|:---------|:-------|:------------|
+| `/api/m3u-proxy/channel/{id}/{uuid?}` | GET | Proxy a channel stream |
+| `/api/m3u-proxy/episode/{id}/{uuid?}` | GET | Proxy an episode stream |
+| `/api/m3u-proxy/webhooks` | POST | Handle proxy webhook events |
+| `/api/m3u-proxy/failover-resolver` | POST | Resolve failover URLs for channels |
+
+### Channel Health Check
+
+Check if a channel stream is accessible:
+
+```sh
+curl --request GET \
+  --url 'http://localhost:36400/channel/{id}/health' \
+  --header 'Accept: application/json'
+```
+
+---
+
+## 📡 Xtream API Compatibility
+{: .d-inline-block }
+
+New (v0.8.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+**m3u editor** provides Xtream API compatible endpoints, allowing you to use your playlists with apps that support the Xtream API format.
+
+### Xtream API Endpoints
+
+| Endpoint | Description |
+|:---------|:------------|
+| `/player_api.php` | Main Xtream API endpoint |
+| `/get.php` | Alternative API endpoint |
+| `/xmltv.php` | EPG/XMLTV endpoint |
+| `/live/{username}/{password}/{streamId}` | Live stream URL |
+| `/movie/{username}/{password}/{streamId}` | VOD/Movie stream URL |
+| `/series/{username}/{password}/{streamId}` | Series stream URL |
+
+### Example Xtream API Usage
+
+To get live categories:
+```sh
+curl 'http://localhost:36400/player_api.php?username=USER&password=PASS&action=get_live_categories'
+```
+
+To get live streams:
+```sh
+curl 'http://localhost:36400/player_api.php?username=USER&password=PASS&action=get_live_streams'
+```
+
+The username and password are your playlist's Xtream credentials configured in **m3u editor**.
+
+---
+
+## 📺 HDHomeRun Endpoints
+
+**m3u editor** can emulate an HDHomeRun tuner device for compatibility with media servers.
+
+| Endpoint | Description |
+|:---------|:------------|
+| `/{uuid}/discover.json` | Device discovery information |
+| `/{uuid}/lineup.json` | Channel lineup |
+| `/{uuid}/lineup_status.json` | Lineup status |
+| `/{uuid}/device.xml` | Device XML descriptor |
+
+These endpoints allow media servers like Plex and Jellyfin to discover and use your playlist as an HDHomeRun tuner.

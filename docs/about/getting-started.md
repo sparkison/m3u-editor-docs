@@ -10,11 +10,6 @@ nav_order: 2
 
 To ensure the data is saved across builds, link an empty volume to: `/var/www/config` within the container. This is where the `env` file will be stored, along with the sqlite database and the application log files.
 
-Note about websocket
-{: .label .label-purple }
-
-**NOTE**: You will need to set the `REVERB_HOST` variable to the machine IP where **m3u editor** is runing for websockets to work correctly (if not running on `localhost`). 
-
 #### Versions
 
 We inlcude both **linux/amd64** and **linux/arm64** builds in our build process, starting at version `v0.4.5`. We also push regular updates and new beta features to the `experimental` and `dev` branches.
@@ -29,8 +24,10 @@ We inlcude both **linux/amd64** and **linux/arm64** builds in our build process,
 #### Table of contents
 
 - [Docker compose (simplest)](#-docker-compose)
-- [Docker with internal Postgres (recommended)](#-docker-compose-with--sql-postgresql) <sup>(v0.6.0+)</sup>
+- [Docker with m3u-proxy (recommended v0.8.x+)](#-docker-with-m3u-proxy-recommended) <sup>(v0.8.0+)</sup>
+- [Docker with internal Postgres](#-docker-compose-with--sql-postgresql) <sup>(v0.6.0+)</sup>
 - [Docker with your Postgres (advanced)](#-if-youd-like-to-use-your-own-postgresql-instance) <sup>(v0.6.0+)</sup>
+- [Advanced deployment options](#-advanced-deployment-options)
 ---
 
 ## 🐳 Docker compose
@@ -61,6 +58,135 @@ Or via Docker CLI:
 ```bash
  docker run --name m3u-editor -e TZ=Etc/UTC -e APP_URL=http://localhost -v ./data:/var/www/config --restart unless-stopped -p 36400:36400 sparkison/m3u-editor:latest 
 ```
+
+---
+
+## 🐳 Docker with M3U-Proxy (Recommended)
+{: .d-inline-block }
+
+New (v0.8.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+Starting with **v0.8.0**, **m3u editor** includes built-in m3u-proxy support for stream proxying, transcoding, and connection pooling. This is the **recommended setup** for most users.
+
+### Why use M3U-Proxy?
+
+- **Stream Pooling**: Multiple clients can share a single provider connection
+- **Connection Management**: Avoid "max connections exceeded" errors
+- **Transcoding Support**: Convert streams to HLS format
+- **Reduced Provider Load**: Single connection serves multiple viewers
+
+### Quick Setup with External Proxy (Recommended)
+
+Running m3u-proxy as a separate container provides better performance and Redis-based pooling:
+
+```yaml
+services:
+  m3u-editor:
+    image: sparkison/m3u-editor:latest
+    container_name: m3u-editor
+    environment:
+      - TZ=Etc/UTC
+      - APP_URL=http://localhost
+      - APP_PORT=36400
+      # Postgres (recommended for performance)
+      - ENABLE_POSTGRES=true
+      - PG_DATABASE=m3ue
+      - PG_USER=m3ue
+      - PG_PASSWORD=changeme
+      - DB_CONNECTION=pgsql
+      - DB_HOST=localhost
+      - DB_PORT=5432
+      - DB_DATABASE=m3ue
+      - DB_USERNAME=m3ue
+      - DB_PASSWORD=changeme
+      # Redis (external)
+      - REDIS_ENABLED=false
+      - REDIS_HOST=redis
+      - REDIS_SERVER_PORT=6379
+      # M3U Proxy (external)
+      - M3U_PROXY_ENABLED=false
+      - M3U_PROXY_HOST=m3u-proxy
+      - M3U_PROXY_PORT=38085
+      - M3U_PROXY_TOKEN=your-secure-token
+    volumes:
+      - ./data:/var/www/config
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    ports:
+      - 36400:36400
+    networks:
+      - m3u-network
+    depends_on:
+      - m3u-proxy
+      - redis
+
+  m3u-proxy:
+    image: sparkison/m3u-proxy:latest
+    container_name: m3u-proxy
+    environment:
+      - API_TOKEN=your-secure-token  # Must match M3U_PROXY_TOKEN above
+      - PORT=38085
+      - REDIS_ENABLED=true
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=6
+      - ENABLE_REDIS_POOLING=true
+      - LOG_LEVEL=INFO
+    restart: unless-stopped
+    networks:
+      - m3u-network
+    depends_on:
+      - redis
+    # Optional: Hardware acceleration
+    # devices:
+    #   - /dev/dri:/dev/dri
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: unless-stopped
+    networks:
+      - m3u-network
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  m3u-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+  redis_data:
+```
+
+### Embedded Proxy (Simpler Alternative)
+
+If you prefer a simpler setup, you can use the embedded m3u-proxy (enabled by default):
+
+```yaml
+services:
+  m3u-editor:
+    image: sparkison/m3u-editor:latest
+    container_name: m3u-editor
+    environment:
+      - TZ=Etc/UTC
+      - APP_URL=http://localhost
+      - M3U_PROXY_ENABLED=true  # Uses embedded proxy (default)
+    volumes:
+      - ./data:/var/www/config
+    restart: unless-stopped
+    ports:
+      - 36400:36400
+networks: {}
+```
+
+**Note**: The embedded proxy doesn't support Redis-based stream pooling or hardware acceleration.
 
 ---
 
@@ -227,4 +353,40 @@ networks: {}
 volumes:
   pgdata:
 ```
+
+---
+
+## 🚀 Advanced Deployment Options
+{: .d-inline-block }
+
+New (v0.8.0)
+{: .d-inline-block .v-align-text-bottom .label .label-purple }
+
+**m3u editor** provides several pre-configured docker-compose files for different deployment scenarios:
+
+| File | Description | Use Case |
+|:-----|:------------|:---------|
+| `docker-compose.proxy.yml` | External m3u-proxy + Redis | **Recommended** for production |
+| `docker-compose.proxy-vpn.yml` | External proxy with VPN support | When VPN is required for streams |
+| `docker-compose.aio.yml` | All-in-one setup | Simple deployments |
+| `docker-compose.external-all.yml` | Fully modular (Nginx) | Advanced custom setups |
+| `docker-compose.external-all-caddy.yml` | Fully modular (Caddy) | Automatic HTTPS with Caddy |
+
+### Quick Deployment
+
+```bash
+# Download the recommended setup
+curl -O https://raw.githubusercontent.com/sparkison/m3u-editor/main/docker-compose.proxy.yml
+curl -O https://raw.githubusercontent.com/sparkison/m3u-editor/main/.env.proxy.example
+
+# Setup environment
+cp .env.proxy.example .env
+# Edit .env and configure your settings
+
+# Deploy
+docker-compose -f docker-compose.proxy.yml up -d
+```
+
+See the [GitHub repository](https://github.com/sparkison/m3u-editor) for detailed documentation on each deployment option.
+
 ---
