@@ -1,3 +1,3 @@
-# m3u editor documentation
+# 🗂️ This repo has been archived
 
-Documentation for [m3u editor](https://github.com/sparkison/m3u-editor)
+Please see the updated docs: [https://github.com/sparkison/m3u-editor-docs-v2](https://github.com/sparkison/m3u-editor-docs-v2)
